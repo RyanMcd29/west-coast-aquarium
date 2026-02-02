@@ -55,7 +55,7 @@ export default function AboutPage() {
               monitoring, and the right equipment tuned to your specific setup.
             </p>
           </div>
-          <div className="relative h-72 overflow-hidden rounded-3xl">
+          <div className="relative h-72 overflow-hidden">
             <Image
               src="/images/reef-aquarium-black-cabinet.webp"
               alt="Reef aquarium with clean cabinetry and lighting"
@@ -72,7 +72,7 @@ export default function AboutPage() {
           {values.map((value) => (
             <div
               key={value.title}
-              className="rounded-3xl border border-outline/70 bg-surface/90 p-6"
+              className="flat-panel p-6"
             >
               <h3 className="text-lg font-semibold">{value.title}</h3>
               <p className="mt-3 text-sm text-muted">{value.detail}</p>

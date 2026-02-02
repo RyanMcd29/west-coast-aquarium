@@ -16,6 +16,12 @@ export default function BookingForm() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const fieldClassName =
+    "flat-field w-full px-3 py-2 text-sm text-foreground placeholder:text-muted/70 transition-colors focus:outline-none";
+
+  const optionCardClassName =
+    "flat-option flex items-start gap-3 px-3 py-2 text-sm text-muted transition-colors";
+
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
   const isConfigured = Boolean(accessKey);
 
@@ -62,7 +68,7 @@ export default function BookingForm() {
       </div>
 
       {!isConfigured && (
-        <div className="rounded-2xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+        <div className="flat-alert bg-amber-50 px-4 py-3 text-sm text-amber-900">
           Add your Web3Forms access key to{" "}
           <span className="font-semibold">NEXT_PUBLIC_WEB3FORMS_KEY</span> to
           enable submissions.
@@ -70,13 +76,13 @@ export default function BookingForm() {
       )}
 
       {status === "success" && (
-        <div className="rounded-2xl border border-emerald-300/70 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+        <div className="flat-alert bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
           Thanks for the details. We’ll be in touch shortly.
         </div>
       )}
 
       {status === "error" && (
-        <div className="rounded-2xl border border-rose-300/70 bg-rose-50 px-4 py-3 text-sm text-rose-900">
+        <div className="flat-alert bg-rose-50 px-4 py-3 text-sm text-rose-900">
           {errorMessage}
         </div>
       )}
@@ -87,7 +93,7 @@ export default function BookingForm() {
           <input
             required
             name="name"
-            className="w-full rounded-xl border border-outline/70 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className={fieldClassName}
             placeholder="Your name"
           />
         </label>
@@ -97,7 +103,7 @@ export default function BookingForm() {
             required
             type="email"
             name="email"
-            className="w-full rounded-xl border border-outline/70 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className={fieldClassName}
             placeholder="you@example.com"
           />
         </label>
@@ -107,7 +113,7 @@ export default function BookingForm() {
             required
             type="tel"
             name="phone"
-            className="w-full rounded-xl border border-outline/70 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className={fieldClassName}
             placeholder="04xx xxx xxx"
           />
         </label>
@@ -116,7 +122,7 @@ export default function BookingForm() {
           <input
             required
             name="suburb"
-            className="w-full rounded-xl border border-outline/70 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className={fieldClassName}
             placeholder="Perth suburb"
           />
         </label>
@@ -127,7 +133,7 @@ export default function BookingForm() {
           Tank type
           <select
             name="tank_type"
-            className="w-full rounded-xl border border-outline/70 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className={fieldClassName}
             defaultValue=""
           >
             <option value="" disabled>
@@ -143,7 +149,7 @@ export default function BookingForm() {
           Approx volume (litres)
           <input
             name="tank_volume"
-            className="w-full rounded-xl border border-outline/70 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className={fieldClassName}
             placeholder="e.g. 300"
           />
         </label>
@@ -155,7 +161,7 @@ export default function BookingForm() {
           {serviceOptions.map((option) => (
             <label
               key={option}
-              className="flex items-start gap-3 rounded-xl border border-outline/70 bg-white px-3 py-2 text-sm text-muted"
+              className={optionCardClassName}
             >
               <input
                 type="checkbox"
@@ -173,7 +179,7 @@ export default function BookingForm() {
         Preferred days or times
         <input
           name="preferred_times"
-          className="w-full rounded-xl border border-outline/70 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+          className={fieldClassName}
           placeholder="Weekday mornings, after 4pm, etc."
         />
       </label>
@@ -183,7 +189,7 @@ export default function BookingForm() {
         <textarea
           name="message"
           rows={4}
-          className="w-full rounded-xl border border-outline/70 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+          className={fieldClassName}
           placeholder="Tell us about your tank, livestock, or any issues."
         />
       </label>

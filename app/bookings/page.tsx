@@ -28,11 +28,11 @@ export default function BookingsPage() {
 
       <section className="py-16">
         <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <div className="rounded-3xl border border-outline/70 bg-surface/90 p-6">
+          <div className="flat-panel p-6">
             <BookingForm />
           </div>
           <div className="space-y-6">
-            <div className="rounded-3xl border border-outline/70 bg-surface/90 p-6">
+            <div className="flat-panel p-6">
               <h2 className="text-xl font-semibold">What to expect</h2>
               <ul className="mt-4 space-y-3 text-sm text-muted">
                 {bookingNotes.map((note) => (
@@ -43,14 +43,14 @@ export default function BookingsPage() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-3xl border border-outline/70 bg-surface/90 p-6">
+            <div className="flat-panel p-6">
               <h3 className="text-lg font-semibold">Service area</h3>
               <p className="mt-3 text-sm text-muted">
                 Perth metro and surrounds. If you’re outside the metro area,
                 include your suburb and we’ll confirm travel options.
               </p>
             </div>
-            <div className="rounded-3xl border border-outline/70 bg-surface/90 p-6">
+            <div className="flat-panel p-6">
               <h3 className="text-lg font-semibold">Preferred contact</h3>
               <p className="mt-3 text-sm text-muted">
                 We’ll respond by phone or email. If you have a preferred time

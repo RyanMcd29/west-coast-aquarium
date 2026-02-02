@@ -29,7 +29,7 @@ export default function PageHero({
           <p className="text-lg text-muted">{description}</p>
         </div>
         {imageSrc ? (
-          <div className="relative h-64 overflow-hidden rounded-3xl">
+          <div className="relative h-64 overflow-hidden">
             <Image
               src={imageSrc}
               alt={imageAlt}

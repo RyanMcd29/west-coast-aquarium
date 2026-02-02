@@ -36,7 +36,7 @@ export default function ArcNav({ items }: ArcNavProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="arc-item absolute left-0 top-0 w-56 rounded-2xl border border-outline/70 bg-surface/90 px-5 py-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
+                className="arc-item flat-panel absolute left-0 top-0 w-56 px-5 py-4 text-left transition hover:-translate-y-1"
                 style={style}
               >
                 <span className="block text-sm font-semibold text-foreground">
@@ -56,7 +56,7 @@ export default function ArcNav({ items }: ArcNavProps) {
           <Link
             key={item.href}
             href={item.href}
-            className="rounded-xl border border-outline/70 bg-surface/95 px-4 py-3 text-left shadow-sm"
+            className="flat-panel px-4 py-3 text-left"
           >
             <span className="block text-sm font-semibold text-foreground">
               {item.label}

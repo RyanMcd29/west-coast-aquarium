@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import ArcNav from "@/components/ArcNav";
 import Container from "@/components/Container";
 import HeroMedia from "@/components/HeroMedia";
 
@@ -22,29 +21,6 @@ const services = [
     description:
       "Sump optimisation, dosing setup, lighting calibration, and hardware installations that protect your investment.",
     image: "/images/sump-filtration-equipment.webp",
-  },
-];
-
-const navItems = [
-  {
-    href: "/services",
-    label: "Services",
-    description: "Installations, maintenance, and equipment support.",
-  },
-  {
-    href: "/bookings",
-    label: "Bookings",
-    description: "Request a consultation and tailored quote.",
-  },
-  {
-    href: "/about",
-    label: "About Mario",
-    description: "Professional, careful, and detail-driven.",
-  },
-  {
-    href: "/contact",
-    label: "Contact",
-    description: "Call or email for prompt support.",
   },
 ];
 
@@ -88,14 +64,14 @@ export default function Home() {
               </Link>
             </div>
             <div className="grid gap-4 text-sm text-muted sm:grid-cols-2">
-              <div className="rounded-2xl border border-outline/70 bg-surface/80 p-4">
+              <div className="flat-panel p-4">
                 <p className="font-semibold text-foreground">Perth metro focus</p>
                 <p className="mt-2">
                   Responsive service windows and clear communication from
                   assessment to handover.
                 </p>
               </div>
-              <div className="rounded-2xl border border-outline/70 bg-surface/80 p-4">
+              <div className="flat-panel p-4">
                 <p className="font-semibold text-foreground">Detail-first care</p>
                 <p className="mt-2">
                   Parameter logging and preventative maintenance that keep your
@@ -104,8 +80,16 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="flex justify-center lg:justify-end">
-            <ArcNav items={navItems} />
+          <div className="space-y-6">
+            <div className="relative h-72 overflow-hidden md:h-80 lg:h-96">
+              <Image
+                src="/images/living-room-reef-aquarium.webp"
+                alt="Living room reef aquarium installation"
+                fill
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="object-cover"
+              />
+            </div>
           </div>
         </Container>
       </section>
@@ -125,11 +109,8 @@ export default function Home() {
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {services.map((service) => (
-              <div
-                key={service.title}
-                className="glass-panel rounded-3xl p-5"
-              >
-                <div className="relative h-44 overflow-hidden rounded-2xl">
+              <div key={service.title} className="flat-panel-elevated p-5">
+                <div className="relative h-44 overflow-hidden">
                   <Image
                     src={service.image}
                     alt={service.title}
@@ -180,7 +161,7 @@ export default function Home() {
                   text: "Record parameters and provide next-step guidance.",
                 },
               ].map((item) => (
-                <div key={item.step} className="rounded-2xl border border-outline/70 bg-surface/80 p-4">
+                <div key={item.step} className="flat-panel p-4">
                   <p className="text-xs font-semibold text-primary">{item.step}</p>
                   <p className="mt-2 text-sm font-semibold">{item.title}</p>
                   <p className="mt-1 text-xs text-muted">{item.text}</p>
@@ -188,7 +169,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="relative h-72 overflow-hidden rounded-3xl">
+          <div className="relative h-72 overflow-hidden">
             <Image
               src="/images/reef-aquarium-sump-cabinet.webp"
               alt="Aquarium filtration cabinet with sump and equipment"

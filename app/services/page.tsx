@@ -71,7 +71,7 @@ export default function ServicesPage() {
               {services.map((service) => (
                 <div
                   key={service.title}
-                  className="rounded-2xl border border-outline/70 bg-surface/80 p-5"
+                  className="flat-panel p-5"
                 >
                   <h3 className="text-lg font-semibold">{service.title}</h3>
                   <p className="mt-2 text-sm text-muted">{service.detail}</p>
@@ -80,7 +80,7 @@ export default function ServicesPage() {
             </div>
           </div>
           <div className="space-y-6">
-            <div className="rounded-3xl border border-outline/70 bg-surface/90 p-6">
+            <div className="flat-panel p-6">
               <h3 className="text-lg font-semibold">What’s included</h3>
               <ul className="mt-4 space-y-3 text-sm text-muted">
                 {inclusions.map((item) => (
@@ -91,7 +91,7 @@ export default function ServicesPage() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-3xl border border-outline/70 bg-surface/90 p-6">
+            <div className="flat-panel p-6">
               <h3 className="text-lg font-semibold">Ideal for</h3>
               <ul className="mt-4 space-y-3 text-sm text-muted">
                 {idealFor.map((item) => (
@@ -108,7 +108,7 @@ export default function ServicesPage() {
 
       <section className="bg-surface-elevated py-16">
         <Container className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="relative h-72 overflow-hidden rounded-3xl">
+          <div className="relative h-72 overflow-hidden">
             <Image
               src="/images/reef-aquarium-sump-cabinet.webp"
               alt="Aquarium filtration cabinet and sump equipment"

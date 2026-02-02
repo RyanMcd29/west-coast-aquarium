@@ -36,7 +36,7 @@ export default function ContactPage() {
 
       <section className="py-16">
         <Container className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <div className="rounded-3xl border border-outline/70 bg-surface/90 p-6">
+          <div className="flat-panel p-6">
             <h2 className="text-2xl font-semibold">Contact details</h2>
             <ul className="mt-6 space-y-4 text-sm text-muted">
               {contactDetails.map((detail) => (
@@ -60,7 +60,7 @@ export default function ContactPage() {
               ))}
             </ul>
           </div>
-          <div className="rounded-3xl border border-outline/70 bg-surface/90 p-6">
+          <div className="flat-panel p-6">
             <h3 className="text-lg font-semibold">Operating style</h3>
             <p className="mt-3 text-sm text-muted">
               We focus on clear communication, safe handling of livestock, and
@@ -68,7 +68,7 @@ export default function ContactPage() {
               or ongoing care, include a few details so we can guide you
               efficiently.
             </p>
-            <div className="mt-6 rounded-2xl border border-outline/70 bg-surface-elevated px-4 py-3 text-sm text-muted">
+            <div className="flat-panel-elevated mt-6 px-4 py-3 text-sm text-muted">
               <p className="font-semibold text-foreground">Tip</p>
               <p className="mt-1">
                 Sharing your tank size, livestock type, and current equipment

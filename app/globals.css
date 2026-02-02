@@ -65,8 +65,51 @@ h4 {
 
   .glass-panel {
     background: color-mix(in srgb, var(--surface) 80%, transparent);
-    border: 1px solid color-mix(in srgb, var(--outline) 70%, transparent);
     box-shadow: 0 30px 60px -40px color-mix(in srgb, #000 40%, transparent);
+  }
+
+  .flat-panel {
+    background: color-mix(in srgb, var(--surface) 96%, transparent);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--outline) 60%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, var(--outline) 60%, transparent);
+  }
+
+  .flat-panel-elevated {
+    background: var(--surface-elevated);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--outline) 60%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, var(--outline) 60%, transparent);
+  }
+
+  .flat-field {
+    background: var(--surface-elevated);
+    border-radius: 0;
+    box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--outline) 70%, transparent);
+  }
+
+  .flat-field:focus {
+    background: var(--surface);
+    box-shadow: inset 0 -2px 0 var(--primary);
+  }
+
+  .flat-option {
+    background: var(--surface-elevated);
+    border-radius: 0;
+    box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--outline) 70%, transparent);
+  }
+
+  .flat-option:hover,
+  .flat-option:focus-within {
+    background: var(--surface);
+    box-shadow: inset 0 -2px 0 var(--accent);
+  }
+
+  .flat-alert {
+    border-radius: 0;
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #000 8%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, #000 8%, transparent);
   }
 
   .arc-item {
