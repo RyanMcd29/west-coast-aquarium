@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
+import { withBasePath } from "@/lib/paths";
 
 export const metadata: Metadata = {
   title: "About Mario",
@@ -57,7 +58,7 @@ export default function AboutPage() {
           </div>
           <div className="relative h-72 overflow-hidden">
             <Image
-              src="/images/reef-aquarium-black-cabinet.webp"
+              src={withBasePath("/images/reef-aquarium-black-cabinet.webp")}
               alt="Reef aquarium with clean cabinetry and lighting"
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"

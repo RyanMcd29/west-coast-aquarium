@@ -4,6 +4,7 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import SeoJsonLd from "@/components/SeoJsonLd";
+import { withBasePath } from "@/lib/paths";
 import { faqJsonLd, servicesJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -110,7 +111,7 @@ export default function ServicesPage() {
         <Container className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="relative h-72 overflow-hidden">
             <Image
-              src="/images/reef-aquarium-sump-cabinet.webp"
+              src={withBasePath("/images/reef-aquarium-sump-cabinet.webp")}
               alt="Aquarium filtration cabinet and sump equipment"
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"

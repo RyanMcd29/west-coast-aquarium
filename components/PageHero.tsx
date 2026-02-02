@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Container from "./Container";
+import { withBasePath } from "@/lib/paths";
 
 type PageHeroProps = {
   title: string;
@@ -16,6 +17,8 @@ export default function PageHero({
   imageSrc,
   imageAlt = "",
 }: PageHeroProps) {
+  const resolvedImageSrc = imageSrc ? withBasePath(imageSrc) : undefined;
+
   return (
     <section className="bg-surface-elevated py-16">
       <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -28,10 +31,10 @@ export default function PageHero({
           <h1 className="text-4xl font-semibold leading-tight">{title}</h1>
           <p className="text-lg text-muted">{description}</p>
         </div>
-        {imageSrc ? (
+        {resolvedImageSrc ? (
           <div className="relative h-64 overflow-hidden">
             <Image
-              src={imageSrc}
+              src={resolvedImageSrc}
               alt={imageAlt}
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { withBasePath } from "@/lib/paths";
 
 type LogoProps = {
   size?: "sm" | "md";
@@ -17,7 +18,7 @@ export default function Logo({ size = "md" }: LogoProps) {
   return (
     <Link href="/" className="flex items-center gap-3">
       <Image
-        src="/images/wcas%20logo.svg"
+        src={withBasePath("/images/wcas%20logo.svg")}
         alt="West Coast Aquarium Services logo"
         width={dimensions.width}
         height={dimensions.height}

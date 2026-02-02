@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
 import HeroMedia from "@/components/HeroMedia";
+import { withBasePath } from "@/lib/paths";
 
 const services = [
   {
@@ -83,7 +84,7 @@ export default function Home() {
           <div className="space-y-6">
             <div className="relative h-72 overflow-hidden md:h-80 lg:h-96">
               <Image
-                src="/images/living-room-reef-aquarium.webp"
+                src={withBasePath("/images/living-room-reef-aquarium.webp")}
                 alt="Living room reef aquarium installation"
                 fill
                 sizes="(min-width: 1024px) 40vw, 100vw"
@@ -112,7 +113,7 @@ export default function Home() {
               <div key={service.title} className="flat-panel-elevated p-5">
                 <div className="relative h-44 overflow-hidden">
                   <Image
-                    src={service.image}
+                    src={withBasePath(service.image)}
                     alt={service.title}
                     fill
                     sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 100vw"
@@ -171,7 +172,7 @@ export default function Home() {
           </div>
           <div className="relative h-72 overflow-hidden">
             <Image
-              src="/images/reef-aquarium-sump-cabinet.webp"
+              src={withBasePath("/images/reef-aquarium-sump-cabinet.webp")}
               alt="Aquarium filtration cabinet with sump and equipment"
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"

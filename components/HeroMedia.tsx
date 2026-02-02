@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withBasePath } from "@/lib/paths";
 
 type HeroMediaProps = {
   imageSrc: string;
@@ -8,6 +9,8 @@ type HeroMediaProps = {
 
 export default function HeroMedia({ imageSrc, imageAlt, videoSrc }: HeroMediaProps) {
   const hasVideo = Boolean(videoSrc);
+  const resolvedImageSrc = withBasePath(imageSrc);
+  const resolvedVideoSrc = videoSrc ? withBasePath(videoSrc) : undefined;
 
   return (
     <div className="absolute inset-0 -z-10">
@@ -18,13 +21,13 @@ export default function HeroMedia({ imageSrc, imageAlt, videoSrc }: HeroMediaPro
           muted
           loop
           playsInline
-          poster={imageSrc}
+          poster={resolvedImageSrc}
         >
-          <source src={videoSrc} type="video/mp4" />
+          <source src={resolvedVideoSrc} type="video/mp4" />
         </video>
       )}
       <Image
-        src={imageSrc}
+        src={resolvedImageSrc}
         alt={imageAlt}
         fill
         priority
