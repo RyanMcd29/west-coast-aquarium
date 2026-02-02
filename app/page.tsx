@@ -1,65 +1,225 @@
 import Image from "next/image";
+import Link from "next/link";
+import ArcNav from "@/components/ArcNav";
+import Container from "@/components/Container";
+import HeroMedia from "@/components/HeroMedia";
+
+const services = [
+  {
+    title: "Installations & relocations",
+    description:
+      "From new tank builds to careful moves, we handle logistics, plumbing, and safe livestock transfers.",
+    image: "/images/reef-aquarium-white-cabinet.webp",
+  },
+  {
+    title: "Routine maintenance",
+    description:
+      "Scheduled cleans, water changes, and system inspections that keep parameters stable and presentation sharp.",
+    image: "/images/reef-aquarium-black-cabinet.webp",
+  },
+  {
+    title: "Equipment & filtration",
+    description:
+      "Sump optimisation, dosing setup, lighting calibration, and hardware installations that protect your investment.",
+    image: "/images/sump-filtration-equipment.webp",
+  },
+];
+
+const navItems = [
+  {
+    href: "/services",
+    label: "Services",
+    description: "Installations, maintenance, and equipment support.",
+  },
+  {
+    href: "/bookings",
+    label: "Bookings",
+    description: "Request a consultation and tailored quote.",
+  },
+  {
+    href: "/about",
+    label: "About Mario",
+    description: "Professional, careful, and detail-driven.",
+  },
+  {
+    href: "/contact",
+    label: "Contact",
+    description: "Call or email for prompt support.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div>
+      <section className="relative overflow-hidden pb-16 pt-10 md:pb-24">
+        <HeroMedia
+          imageSrc="/images/reef-aquarium-coral-closeup.webp"
+          imageAlt="Colourful reef aquarium with coral and fish"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        <Container className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
+                Perth aquarium technician
+              </p>
+              <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
+                Bespoke aquarium care with technical precision and calm,
+                professional service.
+              </h1>
+              <p className="max-w-xl text-lg text-muted">
+                West Coast Aquarium Services keeps your system clean, stable, and
+                show-ready. From installations and relocations to routine
+                maintenance and parameter logging, we deliver confident care for
+                residential and commercial aquariums across Perth metro.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/bookings"
+                className="ocean-gradient inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110"
+              >
+                Request a consultation
+              </Link>
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center rounded-full border border-outline/80 bg-surface/90 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+              >
+                Explore services
+              </Link>
+            </div>
+            <div className="grid gap-4 text-sm text-muted sm:grid-cols-2">
+              <div className="rounded-2xl border border-outline/70 bg-surface/80 p-4">
+                <p className="font-semibold text-foreground">Perth metro focus</p>
+                <p className="mt-2">
+                  Responsive service windows and clear communication from
+                  assessment to handover.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-outline/70 bg-surface/80 p-4">
+                <p className="font-semibold text-foreground">Detail-first care</p>
+                <p className="mt-2">
+                  Parameter logging and preventative maintenance that keep your
+                  ecosystem balanced.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-center lg:justify-end">
+            <ArcNav items={navItems} />
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-surface-elevated py-16">
+        <Container className="space-y-10">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
+              Core services
+            </p>
+            <h2 className="text-3xl font-semibold">Comprehensive support</h2>
+            <p className="max-w-2xl text-muted">
+              Whether you need a new setup, a safe relocation, or reliable
+              ongoing care, each visit is tailored to the needs of your aquarium
+              and livestock.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {services.map((service) => (
+              <div
+                key={service.title}
+                className="glass-panel rounded-3xl p-5"
+              >
+                <div className="relative h-44 overflow-hidden rounded-2xl">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="mt-4 text-lg font-semibold">
+                  {service.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted">
+                  {service.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16">
+        <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="space-y-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
+              How it works
+            </p>
+            <h2 className="text-3xl font-semibold">A calm, proven process</h2>
+            <p className="text-muted">
+              We start with a quick consult to understand your system, then
+              deliver a clear scope, timing, and plan. Every visit focuses on
+              system stability, clean presentation, and long-term performance.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                {
+                  step: "01",
+                  title: "Assess",
+                  text: "Review tank size, livestock, and equipment requirements.",
+                },
+                {
+                  step: "02",
+                  title: "Service",
+                  text: "Carry out safe maintenance, install upgrades, or manage moves.",
+                },
+                {
+                  step: "03",
+                  title: "Log",
+                  text: "Record parameters and provide next-step guidance.",
+                },
+              ].map((item) => (
+                <div key={item.step} className="rounded-2xl border border-outline/70 bg-surface/80 p-4">
+                  <p className="text-xs font-semibold text-primary">{item.step}</p>
+                  <p className="mt-2 text-sm font-semibold">{item.title}</p>
+                  <p className="mt-1 text-xs text-muted">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="relative h-72 overflow-hidden rounded-3xl">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/images/reef-aquarium-sump-cabinet.webp"
+              alt="Aquarium filtration cabinet with sump and equipment"
+              fill
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-surface-elevated py-16">
+        <Container className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+          <div className="max-w-2xl space-y-4">
+            <h2 className="text-3xl font-semibold">
+              Ready for a better-maintained aquarium?
+            </h2>
+            <p className="text-muted">
+              Book a consultation to discuss your system and get a tailored
+              maintenance plan. We service homes, offices, and hospitality
+              venues across Perth metro and surrounds.
+            </p>
+          </div>
+          <Link
+            href="/bookings"
+            className="ocean-gradient inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110"
           >
-            Documentation
-          </a>
-        </div>
-      </main>
+            Request a consultation
+          </Link>
+        </Container>
+      </section>
     </div>
   );
 }

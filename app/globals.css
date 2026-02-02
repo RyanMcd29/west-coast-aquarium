@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5fbff;
+  --foreground: #0b1f2a;
+  --surface: #ffffff;
+  --surface-elevated: #eef6fb;
+  --primary: #087bb0;
+  --accent: #02aef0;
+  --muted: #56626b;
+  --outline: #d6e6ef;
+  --hero-glow: #b8e6fb;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-outline: var(--outline);
+  --color-hero-glow: var(--hero-glow);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #07121a;
+    --foreground: #e6f1f7;
+    --surface: #0c1b27;
+    --surface-elevated: #102534;
+    --muted: #a5b8c6;
+    --outline: #1c3445;
+    --hero-glow: #0d4f75;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), "Segoe UI", system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+@layer utilities {
+  .ocean-gradient {
+    background: linear-gradient(120deg, #087bb0 0%, #02aef0 100%);
+  }
+
+  .glass-panel {
+    background: color-mix(in srgb, var(--surface) 80%, transparent);
+    border: 1px solid color-mix(in srgb, var(--outline) 70%, transparent);
+    box-shadow: 0 30px 60px -40px color-mix(in srgb, #000 40%, transparent);
+  }
+
+  .arc-item {
+    transform: translate(var(--arc-x, 0px), var(--arc-y, 0px));
+  }
+
+  @supports (offset-path: path("M0,0 L1,1")) {
+    .arc-item {
+      transform: none;
+    }
+  }
 }
