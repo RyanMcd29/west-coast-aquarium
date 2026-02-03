@@ -5,9 +5,9 @@ import HeroMedia from "@/components/HeroMedia";
 import { withBasePath } from "@/lib/paths";
 
 const seo = {
-  title: "Perth Aquarium Maintenance | West Coast Aquarium",
+  title: "Aquarium Maintenance Perth and Fish Tank Service",
   description:
-    "Perth aquarium maintenance, cleaning, relocations, and installations for homes and businesses. West Coast Aquarium provides clear reports and reliable visits.",
+    "Perth aquarium maintenance for homes and businesses, with aquarium cleaning, fish tank service, and clear reporting across Perth metro. Book a quote today.",
 };
 
 const MetaTag = ({
@@ -27,19 +27,19 @@ const services = [
   {
     title: "Installations & relocations",
     description:
-      "From new tank builds to careful moves, we handle logistics, plumbing, and safe livestock transfers.",
+      "Aquarium installation Perth and aquarium relocation support with careful logistics, plumbing, and safe livestock transfers.",
     image: "/images/reef-aquarium-white-cabinet.webp",
   },
   {
     title: "Routine maintenance",
     description:
-      "Scheduled cleans, water changes, and system inspections that keep parameters stable and presentation sharp.",
+      "Regular visits, water changes, and aquarium maintenance service Perth homes rely on to keep parameters stable and presentation sharp.",
     image: "/images/reef-aquarium-black-cabinet.webp",
   },
   {
     title: "Equipment & filtration",
     description:
-      "Sump optimisation, dosing setup, lighting calibration, and hardware installations that protect your investment.",
+      "Filter cleaning, canister filter service, and sump cleaning for Perth aquariums, plus lighting calibration and hardware installations.",
     image: "/images/sump-filtration-equipment.webp",
   },
 ];
@@ -57,17 +57,17 @@ export default function Home() {
           <div className="space-y-8">
             <div className="space-y-4">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
-                Perth aquarium technician
+                Perth aquarium maintenance service
               </p>
               <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-                Bespoke aquarium care with technical precision and calm,
-                professional service.
+                Aquarium Maintenance Perth and Fish Tank Service
               </h1>
               <p className="max-w-xl text-lg text-muted">
-                West Coast Aquarium Services keeps your system clean, stable, and
-                show-ready. From installations and relocations to routine
-                maintenance and parameter logging, we deliver confident care for
-                residential and commercial aquariums across Perth metro.
+                West Coast Aquarium Services delivers aquarium maintenance Perth
+                clients rely on, with aquarium cleaning, fish tank cleaning, and
+                aquarium service across Perth metro. If you are searching for
+                aquarium maintenance near me, our team supports local homes and
+                businesses.
               </p>
             </div>
             <div className="flex flex-wrap gap-4">
@@ -89,7 +89,8 @@ export default function Home() {
                 <p className="font-semibold text-foreground">Perth metro focus</p>
                 <p className="mt-2">
                   Responsive service windows and clear communication from
-                  assessment to handover.
+                  assessment to handover, with an aquarium cleaner Perth locals
+                  can rely on.
                 </p>
                 <Link
                   href="/perth-aquarium-services"
@@ -101,8 +102,8 @@ export default function Home() {
               <div className="flat-panel p-4">
                 <p className="font-semibold text-foreground">Detail-first care</p>
                 <p className="mt-2">
-                  Parameter logging and preventative maintenance that keep your
-                  ecosystem balanced.
+                  Parameter logging and preventative maintenance from a fish
+                  tank cleaner Perth businesses trust.
                 </p>
               </div>
             </div>
@@ -129,9 +130,9 @@ export default function Home() {
             </p>
             <h2 className="text-3xl font-semibold">Comprehensive support</h2>
             <p className="max-w-2xl text-muted">
-              Whether you need a new setup, a safe relocation, or reliable
-              ongoing care, each visit is tailored to the needs of your aquarium
-              and livestock.
+              From aquarium cleaning Perth residents book for a refresh to fish
+              tank service Perth homes need for ongoing care, each visit is
+              tailored to your aquarium, livestock, and goals.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
@@ -216,8 +217,8 @@ export default function Home() {
             </h2>
             <p className="text-muted">
               Book a consultation to discuss your system and get a tailored
-              maintenance plan. We service homes, offices, and hospitality
-              venues across Perth metro and surrounds.
+              maintenance plan. We deliver aquarium service Perth homes, offices,
+              and hospitality venues rely on across Perth metro and surrounds.
             </p>
           </div>
           <Link

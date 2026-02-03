@@ -8,9 +8,9 @@ const heroImageSrc = "/images/reef-aquarium-sump-maintenance.webp";
 const heroImageAlt = "Reef aquarium maintenance setup with sump access";
 
 const seo = {
-  title: "Perth Aquarium Consultation",
+  title: "Book Aquarium Maintenance Perth",
   description:
-    "Request a consultation for aquarium maintenance, cleaning, relocations, or installations in Perth metro and get a tailored service plan with clear next steps.",
+    "Book aquarium maintenance in Perth with fish tank cleaning, water changes, and clear reports. Ask about aquarium maintenance packages and a quick quote.",
 };
 
 const MetaTag = ({
@@ -44,6 +44,7 @@ export const metadata: Metadata = {
 
 const bookingNotes = [
   "We reply within 1–2 business days with availability and next steps.",
+  "We can share aquarium maintenance cost Perth ranges and a clear aquarium cleaning quote once we review your tank details.",
   "Emergency callouts can be arranged where possible.",
   "Please share any recent issues or parameter concerns.",
 ];
@@ -54,8 +55,8 @@ export default function BookingsPage() {
       <MetaTag title={seo.title} description={seo.description} />
       <PageHero
         eyebrow="Bookings"
-        title="Request a consultation"
-        description="Tell us about your aquarium and we’ll prepare a tailored service plan. We work with residential and commercial tanks across Perth metro and surrounds."
+        title={seo.title}
+        description={seo.description}
         imageSrc={heroImageSrc}
         imageAlt={heroImageAlt}
       />

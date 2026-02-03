@@ -27,19 +27,24 @@ const monoFont = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://westcoastaquariumservices.com.au"),
-  title: {
-    default: "Perth Aquarium Maintenance | West Coast Aquarium",
-    template: "%s | West Coast Aquarium",
-  },
+  title: "Aquarium Maintenance Perth and Fish Tank Service",
   description:
-    "Perth aquarium maintenance, cleaning, relocations, and installations for homes and businesses. West Coast Aquarium provides clear reports and reliable visits.",
+    "Perth aquarium maintenance for homes and businesses, with aquarium cleaning, fish tank service, and clear reporting across Perth metro. Book a quote today.",
   keywords: [
     "aquarium maintenance Perth",
     "aquarium cleaning Perth",
+    "fish tank cleaning Perth",
+    "fish tank maintenance Perth",
+    "aquarium service Perth",
+    "fish tank service Perth",
+    "aquarium cleaner Perth",
+    "fish tank cleaner Perth",
+    "aquarium maintenance company Perth",
+    "commercial aquarium maintenance Perth",
+    "reef aquarium maintenance Perth",
     "aquarium technician Perth",
     "Perth aquarium services",
     "aquarium relocation Perth",
-    "reef aquarium maintenance Perth",
     "aquarium installation Perth",
   ],
   icons: {
@@ -50,9 +55,9 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   openGraph: {
-    title: "Perth Aquarium Maintenance | West Coast Aquarium",
+    title: "Aquarium Maintenance Perth and Fish Tank Service",
     description:
-      "Perth aquarium maintenance, cleaning, relocations, and installations for homes and businesses. West Coast Aquarium provides clear reports and reliable visits.",
+      "Perth aquarium maintenance for homes and businesses, with aquarium cleaning, fish tank service, and clear reporting across Perth metro. Book a quote today.",
     url: "https://westcoastaquariumservices.com.au",
     siteName: "West Coast Aquarium Services",
     locale: "en_AU",
@@ -66,9 +71,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Perth Aquarium Maintenance | West Coast Aquarium",
+    title: "Aquarium Maintenance Perth and Fish Tank Service",
     description:
-      "Perth aquarium maintenance, cleaning, relocations, and installations for homes and businesses. West Coast Aquarium provides clear reports and reliable visits.",
+      "Perth aquarium maintenance for homes and businesses, with aquarium cleaning, fish tank service, and clear reporting across Perth metro. Book a quote today.",
   },
 };
 

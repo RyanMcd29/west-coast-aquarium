@@ -28,9 +28,9 @@ export const servicePages: ServicePage[] = [
     title: "Aquarium maintenance",
     seoTitle: "Aquarium Maintenance Perth",
     metaDescription:
-      "Perth aquarium maintenance for homes and businesses, with scheduled cleaning, water testing, and equipment checks that keep tanks stable and presentation ready.",
+      "Aquarium maintenance Perth for regular care, fish tank maintenance, water changes, and filter cleaning. Flexible schedules for Perth homes and businesses.",
     summary:
-      "Scheduled servicing that keeps parameters stable and presentation sharp.",
+      "Aquarium maintenance Perth with stable parameters and presentation-ready tanks.",
     keywords: [
       "aquarium maintenance Perth",
       "aquarium servicing Perth",
@@ -39,24 +39,24 @@ export const servicePages: ServicePage[] = [
     ],
     hero: {
       eyebrow: "Maintenance",
-      title: "Aquarium maintenance that keeps Perth tanks stable.",
+      title: "Aquarium Maintenance Perth",
       description:
-        "Reliable servicing for freshwater, marine, and reef systems. We clean, test, and tune your equipment to keep your aquarium clear and consistent.",
+        "Aquarium maintenance Perth for regular care, fish tank maintenance, water changes, and filter cleaning. Flexible schedules for Perth homes and businesses.",
       imageSrc: "/images/reef-aquarium-sump-maintenance.webp",
       imageAlt: "Aquarium sump maintenance and equipment checks",
     },
     serviceType: "Aquarium maintenance",
     whatsIncluded: [
-      "Scheduled water changes and filter care",
-      "Glass, overflow, and algae control",
-      "Full parameter testing with clear notes",
-      "Equipment inspection and calibration",
+      "Aquarium water change service Perth and filter care",
+      "Aquarium filter cleaning Perth, plus glass, overflow, and algae control",
+      "Aquarium water testing service Perth with clear notes",
+      "Aquarium health check Perth with equipment inspection and calibration",
       "Feeding and stocking guidance between visits",
     ],
     idealFor: [
-      "Busy households who want consistent care",
-      "Offices and hospitality venues",
-      "Reef or freshwater systems needing stability",
+      "Freshwater aquarium maintenance Perth and tropical fish tank maintenance",
+      "Offices and hospitality venues needing reliable care",
+      "Reef or marine systems needing stability",
     ],
     process: [
       {
@@ -100,9 +100,9 @@ export const servicePages: ServicePage[] = [
     title: "Aquarium cleaning",
     seoTitle: "Aquarium Cleaning Perth",
     metaDescription:
-      "Aquarium cleaning in Perth with algae control, glass cleaning, filter care, and water changes to restore clarity and fish health for homes and businesses.",
+      "Aquarium cleaning Perth for one-off or seasonal refreshes, with fish tank cleaning, algae removal, gravel vacuuming, and safe water changes for Perth homes.",
     summary:
-      "Deep cleaning, algae control, and filter refreshes for clear tanks.",
+      "Aquarium cleaning Perth for clear glass, algae control, and filter refreshes.",
     keywords: [
       "aquarium cleaning Perth",
       "fish tank cleaning Perth",
@@ -111,17 +111,17 @@ export const servicePages: ServicePage[] = [
     ],
     hero: {
       eyebrow: "Cleaning",
-      title: "Aquarium cleaning that keeps your tank spotless.",
+      title: "Aquarium Cleaning Perth",
       description:
-        "Targeted cleaning that removes algae, detritus, and buildup while protecting livestock and beneficial biofilms.",
+        "Aquarium cleaning Perth for one-off or seasonal refreshes, with fish tank cleaning, algae removal, gravel vacuuming, and safe water changes for Perth homes.",
       imageSrc: "/images/reef-aquarium-black-cabinet.webp",
       imageAlt: "Clean reef aquarium in a modern cabinet",
     },
     serviceType: "Aquarium cleaning",
     whatsIncluded: [
-      "Glass and acrylic cleaning",
-      "Algae removal from rockwork and decor",
-      "Gravel vacuum or sand bed care",
+      "Fish tank cleaning Perth for glass and acrylic",
+      "Aquarium algae removal Perth from rockwork and decor",
+      "Aquarium gravel vacuum Perth or sand bed care",
       "Filter media rinse and pump cleaning",
       "Water change and clarity checks",
     ],
@@ -172,9 +172,9 @@ export const servicePages: ServicePage[] = [
     title: "Aquarium relocation",
     seoTitle: "Aquarium Relocation Perth",
     metaDescription:
-      "Aquarium relocation in Perth with safe livestock transport, equipment packing, and careful rebalancing so your system settles quickly after your move.",
+      "Aquarium relocation Perth with safe livestock transport, equipment packing, and fish tank moving service to set up your system smoothly at the new site.",
     summary:
-      "Plan, pack, transport, and re-install your aquarium safely.",
+      "Aquarium relocation Perth with safe fish tank moving service and re-installation.",
     keywords: [
       "aquarium relocation Perth",
       "aquarium move Perth",
@@ -183,15 +183,15 @@ export const servicePages: ServicePage[] = [
     ],
     hero: {
       eyebrow: "Relocations",
-      title: "Aquarium relocations with safe, calm handling.",
+      title: "Aquarium Relocation Perth",
       description:
-        "We manage the full move: planning, livestock handling, transport, and re-balancing so your aquarium settles in smoothly.",
+        "Aquarium relocation Perth with safe livestock transport, equipment packing, and fish tank moving service to set up your system smoothly at the new site.",
       imageSrc: "/images/reef-aquarium-white-cabinet.webp",
       imageAlt: "Modern reef aquarium ready for relocation",
     },
     serviceType: "Aquarium relocation",
     whatsIncluded: [
-      "Pre-move assessment and timing plan",
+      "Pre-move assessment and fish tank moving service planning",
       "Livestock handling and transport prep",
       "Equipment teardown and secure packing",
       "Re-installation, leak checks, and testing",
@@ -244,9 +244,9 @@ export const servicePages: ServicePage[] = [
     title: "Aquarium installation",
     seoTitle: "Aquarium Installation Perth",
     metaDescription:
-      "Aquarium installation in Perth with equipment setup, plumbing, lighting calibration, and cycling guidance so new tanks start stable and clear for homes.",
+      "Aquarium installation Perth with full aquarium setup service, plumbing, lighting calibration, and cycling guidance so new tanks start stable and clear.",
     summary:
-      "From equipment selection to plumbing and first fill.",
+      "Aquarium installation Perth with a full aquarium setup service.",
     keywords: [
       "aquarium installation Perth",
       "aquarium setup service Perth",
@@ -254,15 +254,15 @@ export const servicePages: ServicePage[] = [
     ],
     hero: {
       eyebrow: "Installations",
-      title: "Aquarium installations built for long-term stability.",
+      title: "Aquarium Installation Perth",
       description:
-        "We design and install aquariums for homes and businesses, with careful equipment setup and cycling guidance.",
+        "Aquarium installation Perth with full aquarium setup service, plumbing, lighting calibration, and cycling guidance so new tanks start stable and clear.",
       imageSrc: "/images/living-room-reef-aquarium.webp",
       imageAlt: "Living room reef aquarium installation",
     },
     serviceType: "Aquarium installation",
     whatsIncluded: [
-      "Equipment selection and layout planning",
+      "Aquarium setup service Perth with equipment selection and layout planning",
       "Plumbing and filtration setup",
       "Lighting and automation calibration",
       "Initial fill, conditioning, and testing",
@@ -315,9 +315,9 @@ export const servicePages: ServicePage[] = [
     title: "Commercial aquarium maintenance",
     seoTitle: "Commercial Aquarium Maintenance Perth",
     metaDescription:
-      "Commercial aquarium maintenance in Perth for offices, hospitality, and retail, with presentation-first cleaning, scheduled visits, and clear service reporting.",
+      "Commercial aquarium maintenance Perth for offices, reception areas, restaurants, and medical centres, with presentation-first cleaning and scheduled service.",
     summary:
-      "Presentation-first care with flexible scheduling for businesses.",
+      "Commercial aquarium maintenance Perth for offices and display aquariums.",
     keywords: [
       "commercial aquarium maintenance Perth",
       "office aquarium maintenance Perth",
@@ -326,9 +326,9 @@ export const servicePages: ServicePage[] = [
     ],
     hero: {
       eyebrow: "Commercial",
-      title: "Commercial aquarium maintenance for Perth businesses.",
+      title: "Commercial Aquarium Maintenance Perth",
       description:
-        "Keep your display aquarium spotless and reliable with scheduled service, clear reporting, and flexible timing.",
+        "Commercial aquarium maintenance Perth for offices, reception areas, restaurants, and medical centres, with presentation-first cleaning and scheduled service.",
       imageSrc: "/images/reef-aquarium-coral-closeup.webp",
       imageAlt: "Vibrant coral reef aquarium display",
     },
@@ -341,9 +341,10 @@ export const servicePages: ServicePage[] = [
       "Multi-site coordination",
     ],
     idealFor: [
-      "Offices and reception areas",
-      "Hotels, restaurants, and cafes",
-      "Medical and wellness spaces",
+      "Office aquarium maintenance Perth for receptions and boardrooms",
+      "Restaurant aquarium maintenance Perth, cafes, and hospitality venues",
+      "Medical centre aquarium maintenance Perth and aged care sites",
+      "School and display aquarium maintenance Perth for public spaces",
     ],
     process: [
       {
@@ -387,9 +388,9 @@ export const servicePages: ServicePage[] = [
     title: "Reef aquarium maintenance",
     seoTitle: "Reef Aquarium Maintenance Perth",
     metaDescription:
-      "Reef aquarium maintenance in Perth with advanced testing, dosing calibration, and coral health checks to keep salinity and nutrients stable for reef systems.",
+      "Reef aquarium maintenance Perth with marine testing, dosing calibration, and reef tank maintenance to keep saltwater systems stable and coral healthy.",
     summary:
-      "Advanced testing and dosing support for reef keepers.",
+      "Reef tank maintenance Perth with stable saltwater parameters.",
     keywords: [
       "reef aquarium maintenance Perth",
       "saltwater aquarium maintenance Perth",
@@ -397,22 +398,22 @@ export const servicePages: ServicePage[] = [
     ],
     hero: {
       eyebrow: "Reef",
-      title: "Reef aquarium maintenance focused on stability.",
+      title: "Reef Aquarium Maintenance Perth",
       description:
-        "Reef systems demand stable parameters. We test, tune, and log dosing to keep coral and fish thriving.",
+        "Reef aquarium maintenance Perth with marine testing, dosing calibration, and reef tank maintenance to keep saltwater systems stable and coral healthy.",
       imageSrc: "/images/reef-aquarium-sump-cabinet.webp",
       imageAlt: "Reef aquarium filtration cabinet with sump equipment",
     },
     serviceType: "Reef aquarium maintenance",
     whatsIncluded: [
-      "Alkalinity, calcium, and magnesium testing",
+      "Saltwater aquarium maintenance Perth with alkalinity, calcium, and magnesium testing",
       "Dosing and automation calibration",
       "Nutrient management and algae control",
-      "Coral health checks and flow tuning",
+      "Marine aquarium maintenance Perth with coral health checks and flow tuning",
       "RO/DI and salinity management",
     ],
     idealFor: [
-      "Mixed reef and SPS systems",
+      "Reef tank maintenance Perth for mixed reef and SPS systems",
       "High-value coral displays",
       "Reef keepers seeking stability",
     ],

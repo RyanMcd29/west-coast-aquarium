@@ -4,9 +4,9 @@ import PageHero from "@/components/PageHero";
 import { businessInfo, siteUrl } from "@/lib/seo";
 
 const seo = {
-  title: "Contact Perth Aquarium Services",
+  title: "Contact Aquarium Maintenance Perth",
   description:
-    "Contact West Coast Aquarium Services to discuss Perth aquarium maintenance, cleaning, relocations, or installations and receive clear next steps for your tank.",
+    "Contact us for aquarium maintenance Perth, aquarium cleaning Perth, and fish tank service across Perth metro. Request a booking or quote today for your tank.",
 };
 
 const MetaTag = ({
@@ -61,8 +61,8 @@ export default function ContactPage() {
       <MetaTag title={seo.title} description={seo.description} />
       <PageHero
         eyebrow="Contact"
-        title="Let’s keep your aquarium running perfectly."
-        description="Reach out for installations, maintenance visits, or equipment support. We’ll reply promptly with next steps."
+        title={seo.title}
+        description={seo.description}
       />
 
       <section className="py-16">
@@ -95,9 +95,9 @@ export default function ContactPage() {
             <h3 className="text-lg font-semibold">Operating style</h3>
             <p className="mt-3 text-sm text-muted">
               We focus on clear communication, safe handling of livestock, and
-              tidy finishes. If you’re preparing for a move, new installation,
-              or ongoing care, include a few details so we can guide you
-              efficiently.
+              tidy finishes. If you need aquarium cleaning Perth families book,
+              fish tank service, or ongoing care, include a few details so we
+              can guide you efficiently.
             </p>
             <div className="flat-panel-elevated mt-6 px-4 py-3 text-sm text-muted">
               <p className="font-semibold text-foreground">Tip</p>
