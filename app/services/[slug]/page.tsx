@@ -14,15 +14,18 @@ import {
 export const dynamicParams = false;
 
 type PageProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export function generateStaticParams() {
   return servicePages.map((page) => ({ slug: page.slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const page = getServicePage(params.slug);
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const page = getServicePage(slug);
 
   if (!page) {
     return {};
@@ -45,8 +48,9 @@ export function generateMetadata({ params }: PageProps): Metadata {
   };
 }
 
-export default function ServiceDetailPage({ params }: PageProps) {
-  const page = getServicePage(params.slug);
+export default async function ServiceDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const page = getServicePage(slug);
 
   if (!page) {
     notFound();
