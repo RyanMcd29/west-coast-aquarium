@@ -11,14 +11,31 @@ import { servicePages } from "@/lib/service-pages";
 const heroImageSrc = "/images/reef-aquarium-white-cabinet.webp";
 const heroImageAlt = "Modern reef aquarium installation with lighting";
 
-export const metadata: Metadata = {
-  title: "Perth Aquarium Services",
+const seo = {
+  title: "Aquarium Services Perth for Maintenance and Cleaning",
   description:
-    "Perth aquarium services for maintenance, cleaning, relocations, and installations, with safe handling, clear schedules, and care for Perth homes and businesses.",
+    "Aquarium services Perth for maintenance, aquarium cleaning, and fish tank service. From water changes to filter care, we support Perth homes and businesses.",
+};
+
+const MetaTag = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <div hidden>
+    <p>{title}</p>
+    <p>{description}</p>
+  </div>
+);
+
+export const metadata: Metadata = {
+  title: seo.title,
+  description: seo.description,
   openGraph: {
-    title: "Perth Aquarium Services",
-    description:
-      "Perth aquarium services for maintenance, cleaning, relocations, and installations, with safe handling, clear schedules, and care for Perth homes and businesses.",
+    title: seo.title,
+    description: seo.description,
     url: `${siteUrl}/services`,
     images: [
       {
@@ -36,15 +53,15 @@ const serviceCards = servicePages.map((service) => ({
 }));
 
 const inclusions = [
-  "System assessment and maintenance checklist tailored to your tank",
+  "Aquarium maintenance service Perth checklist tailored to your tank",
   "Safe handling of livestock and coral during any service work",
-  "Cleaning of glass, pumps, and filters with care for biofilms",
-  "Water testing with clear notes on stability and trends",
-  "Recommendations on stocking, feeding, and equipment tuning",
+  "Aquarium water change service Perth with stable parameter logs",
+  "Aquarium filter cleaning Perth with glass and pump care for biofilms",
+  "Aquarium water testing service Perth with clear notes on trends",
 ];
 
 const idealFor = [
-  "Busy professionals who want a consistent care schedule",
+  "Busy professionals who want a consistent fish tank maintenance schedule",
   "Hospitality venues and offices that need a spotless display",
   "Reef keepers who value steady parameters and reef health",
   "New tank owners looking for a confident setup process",
@@ -53,12 +70,13 @@ const idealFor = [
 export default function ServicesPage() {
   return (
     <div>
+      <MetaTag title={seo.title} description={seo.description} />
       <SeoJsonLd data={servicesJsonLd} id="services-jsonld" />
       <SeoJsonLd data={faqJsonLd} id="faq-jsonld" />
       <PageHero
         eyebrow="Services"
-        title="Aquarium support that keeps your system stable and stunning."
-        description="Every service is tailored to your tank, livestock, and lifestyle. From new installations to ongoing care, we bring calm, professional expertise to aquariums across Perth metro."
+        title={seo.title}
+        description={seo.description}
         imageSrc={heroImageSrc}
         imageAlt={heroImageAlt}
       />
@@ -128,8 +146,8 @@ export default function ServicesPage() {
             <p className="text-muted">
               We provide flexible service windows across Perth metro, with clear
               communication and follow-up notes so you always know what was done
-              and what to expect next. Whether you need a fortnightly clean or a
-              seasonal refresh, we keep your system thriving.
+              and what to expect next. Ask about aquarium maintenance packages
+              Perth clients use for fortnightly cleans or seasonal refreshes.
             </p>
             <Link
               href="/bookings"
