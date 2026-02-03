@@ -7,14 +7,31 @@ import { businessInfo, siteUrl } from "@/lib/seo";
 const heroImageSrc = "/images/reef-aquarium-white-cabinet.webp";
 const heroImageAlt = "Modern reef aquarium in a living space";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Perth Aquarium Services",
   description:
     "Perth aquarium services across the metro area and nearby suburbs, covering maintenance, cleaning, relocations, and installations with flexible scheduling.",
+};
+
+const MetaTag = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <div hidden>
+    <p>{title}</p>
+    <p>{description}</p>
+  </div>
+);
+
+export const metadata: Metadata = {
+  title: seo.title,
+  description: seo.description,
   openGraph: {
-    title: "Perth Aquarium Services",
-    description:
-      "Perth aquarium services across the metro area and nearby suburbs, covering maintenance, cleaning, relocations, and installations with flexible scheduling.",
+    title: seo.title,
+    description: seo.description,
     url: `${siteUrl}/perth-aquarium-services`,
     images: [
       {
@@ -85,6 +102,7 @@ const serviceRegions = [
 export default function PerthAquariumServicesPage() {
   return (
     <div>
+      <MetaTag title={seo.title} description={seo.description} />
       <PageHero
         eyebrow="Service area"
         title="Perth aquarium services across the metro area"

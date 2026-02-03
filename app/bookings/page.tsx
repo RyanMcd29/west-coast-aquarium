@@ -7,14 +7,31 @@ import { siteUrl } from "@/lib/seo";
 const heroImageSrc = "/images/reef-aquarium-sump-maintenance.webp";
 const heroImageAlt = "Reef aquarium maintenance setup with sump access";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Perth Aquarium Consultation",
   description:
     "Request a consultation for aquarium maintenance, cleaning, relocations, or installations in Perth metro and get a tailored service plan with clear next steps.",
+};
+
+const MetaTag = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <div hidden>
+    <p>{title}</p>
+    <p>{description}</p>
+  </div>
+);
+
+export const metadata: Metadata = {
+  title: seo.title,
+  description: seo.description,
   openGraph: {
-    title: "Perth Aquarium Consultation",
-    description:
-      "Request a consultation for aquarium maintenance, cleaning, relocations, or installations in Perth metro and get a tailored service plan with clear next steps.",
+    title: seo.title,
+    description: seo.description,
     url: `${siteUrl}/bookings`,
     images: [
       {
@@ -34,6 +51,7 @@ const bookingNotes = [
 export default function BookingsPage() {
   return (
     <div>
+      <MetaTag title={seo.title} description={seo.description} />
       <PageHero
         eyebrow="Bookings"
         title="Request a consultation"

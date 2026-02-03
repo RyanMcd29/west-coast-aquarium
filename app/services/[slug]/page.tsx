@@ -17,6 +17,18 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+type MetaTagProps = {
+  title: string;
+  description: string;
+};
+
+const MetaTag = ({ title, description }: MetaTagProps) => (
+  <div hidden>
+    <p>{title}</p>
+    <p>{description}</p>
+  </div>
+);
+
 export function generateStaticParams() {
   return servicePages.map((page) => ({ slug: page.slug }));
 }
@@ -56,6 +68,11 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const seo = {
+    title: page.seoTitle,
+    description: page.metaDescription,
+  };
+
   const serviceJsonLd = buildServiceJsonLd(page);
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -72,6 +89,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
   return (
     <div>
+      <MetaTag title={seo.title} description={seo.description} />
       <SeoJsonLd data={serviceJsonLd} id={`service-jsonld-${page.slug}`} />
       <SeoJsonLd data={faqJsonLd} id={`service-faq-jsonld-${page.slug}`} />
       <PageHero

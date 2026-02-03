@@ -8,14 +8,31 @@ import { siteUrl } from "@/lib/seo";
 const heroImageSrc = "/images/living-room-reef-aquarium.webp";
 const heroImageAlt = "Living room reef aquarium installation";
 
-export const metadata: Metadata = {
+const seo = {
   title: "About Mario, Perth Aquarium Technician",
   description:
     "Meet Mario, the Perth aquarium technician behind West Coast Aquarium Services, providing maintenance, installations, and relocations for homes and businesses.",
+};
+
+const MetaTag = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <div hidden>
+    <p>{title}</p>
+    <p>{description}</p>
+  </div>
+);
+
+export const metadata: Metadata = {
+  title: seo.title,
+  description: seo.description,
   openGraph: {
-    title: "About Mario, Perth Aquarium Technician",
-    description:
-      "Meet Mario, the Perth aquarium technician behind West Coast Aquarium Services, providing maintenance, installations, and relocations for homes and businesses.",
+    title: seo.title,
+    description: seo.description,
     url: `${siteUrl}/about`,
     images: [
       {
@@ -47,6 +64,7 @@ const values = [
 export default function AboutPage() {
   return (
     <div>
+      <MetaTag title={seo.title} description={seo.description} />
       <PageHero
         eyebrow="About"
         title="Hands-on aquarium care with a calm, professional approach."

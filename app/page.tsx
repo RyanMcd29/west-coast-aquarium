@@ -4,6 +4,25 @@ import Container from "@/components/Container";
 import HeroMedia from "@/components/HeroMedia";
 import { withBasePath } from "@/lib/paths";
 
+const seo = {
+  title: "Perth Aquarium Maintenance | West Coast Aquarium",
+  description:
+    "Perth aquarium maintenance, cleaning, relocations, and installations for homes and businesses. West Coast Aquarium provides clear reports and reliable visits.",
+};
+
+const MetaTag = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <div hidden>
+    <p>{title}</p>
+    <p>{description}</p>
+  </div>
+);
+
 const services = [
   {
     title: "Installations & relocations",
@@ -28,6 +47,7 @@ const services = [
 export default function Home() {
   return (
     <div>
+      <MetaTag title={seo.title} description={seo.description} />
       <section className="relative overflow-hidden pb-16 pt-10 md:pb-24">
         <HeroMedia
           imageSrc="/images/reef-aquarium-coral-closeup.webp"

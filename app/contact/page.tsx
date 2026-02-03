@@ -3,14 +3,31 @@ import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import { businessInfo, siteUrl } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Contact Perth Aquarium Services",
   description:
     "Contact West Coast Aquarium Services to discuss Perth aquarium maintenance, cleaning, relocations, or installations and receive clear next steps for your tank.",
+};
+
+const MetaTag = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <div hidden>
+    <p>{title}</p>
+    <p>{description}</p>
+  </div>
+);
+
+export const metadata: Metadata = {
+  title: seo.title,
+  description: seo.description,
   openGraph: {
-    title: "Contact Perth Aquarium Services",
-    description:
-      "Contact West Coast Aquarium Services to discuss Perth aquarium maintenance, cleaning, relocations, or installations and receive clear next steps for your tank.",
+    title: seo.title,
+    description: seo.description,
     url: `${siteUrl}/contact`,
     images: [
       {
@@ -41,6 +58,7 @@ const contactDetails = [
 export default function ContactPage() {
   return (
     <div>
+      <MetaTag title={seo.title} description={seo.description} />
       <PageHero
         eyebrow="Contact"
         title="Let’s keep your aquarium running perfectly."

@@ -11,14 +11,31 @@ import { servicePages } from "@/lib/service-pages";
 const heroImageSrc = "/images/reef-aquarium-white-cabinet.webp";
 const heroImageAlt = "Modern reef aquarium installation with lighting";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Perth Aquarium Services",
   description:
     "Perth aquarium services for maintenance, cleaning, relocations, and installations, with safe handling, clear schedules, and care for Perth homes and businesses.",
+};
+
+const MetaTag = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <div hidden>
+    <p>{title}</p>
+    <p>{description}</p>
+  </div>
+);
+
+export const metadata: Metadata = {
+  title: seo.title,
+  description: seo.description,
   openGraph: {
-    title: "Perth Aquarium Services",
-    description:
-      "Perth aquarium services for maintenance, cleaning, relocations, and installations, with safe handling, clear schedules, and care for Perth homes and businesses.",
+    title: seo.title,
+    description: seo.description,
     url: `${siteUrl}/services`,
     images: [
       {
@@ -53,6 +70,7 @@ const idealFor = [
 export default function ServicesPage() {
   return (
     <div>
+      <MetaTag title={seo.title} description={seo.description} />
       <SeoJsonLd data={servicesJsonLd} id="services-jsonld" />
       <SeoJsonLd data={faqJsonLd} id="faq-jsonld" />
       <PageHero
