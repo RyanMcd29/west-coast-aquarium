@@ -3,11 +3,27 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import { withBasePath } from "@/lib/paths";
+import { siteUrl } from "@/lib/seo";
+
+const heroImageSrc = "/images/living-room-reef-aquarium.webp";
+const heroImageAlt = "Living room reef aquarium installation";
 
 export const metadata: Metadata = {
-  title: "About Mario",
+  title: "About Mario, Perth Aquarium Technician",
   description:
-    "Meet Mario, the technician behind West Coast Aquarium Services. Professional, detail-driven care for Perth metro aquariums.",
+    "Meet Mario, the Perth aquarium technician behind West Coast Aquarium Services, providing maintenance, installations, and relocations for homes and businesses.",
+  openGraph: {
+    title: "About Mario, Perth Aquarium Technician",
+    description:
+      "Meet Mario, the Perth aquarium technician behind West Coast Aquarium Services, providing maintenance, installations, and relocations for homes and businesses.",
+    url: `${siteUrl}/about`,
+    images: [
+      {
+        url: heroImageSrc,
+        alt: heroImageAlt,
+      },
+    ],
+  },
 };
 
 const values = [
@@ -35,8 +51,8 @@ export default function AboutPage() {
         eyebrow="About"
         title="Hands-on aquarium care with a calm, professional approach."
         description="West Coast Aquarium Services is led by Mario, a Perth-based aquarium technician who specialises in the safe installation, maintenance, and optimisation of marine and freshwater systems."
-        imageSrc="/images/living-room-reef-aquarium.webp"
-        imageAlt="Living room reef aquarium installation"
+        imageSrc={heroImageSrc}
+        imageAlt={heroImageAlt}
       />
 
       <section className="py-16">

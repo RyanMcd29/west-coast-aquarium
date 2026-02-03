@@ -3,7 +3,7 @@ import { Geist_Mono, Plus_Jakarta_Sans, Sora } from "next/font/google";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import SeoJsonLd from "@/components/SeoJsonLd";
-import { localBusinessJsonLd } from "@/lib/seo";
+import { businessInfo, localBusinessJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const bodyFont = Plus_Jakarta_Sans({
@@ -28,17 +28,19 @@ const monoFont = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://westcoastaquariumservices.com.au"),
   title: {
-    default: "West Coast Aquarium Services | Perth Aquarium Technician",
-    template: "%s | West Coast Aquarium Services",
+    default: "Perth Aquarium Maintenance | West Coast Aquarium",
+    template: "%s | West Coast Aquarium",
   },
   description:
-    "West Coast Aquarium Services provides bespoke aquarium installations, maintenance, and equipment support across Perth metro and surrounds.",
+    "Perth aquarium maintenance, cleaning, relocations, and installations for homes and businesses. West Coast Aquarium provides clear reports and reliable visits.",
   keywords: [
     "aquarium maintenance Perth",
+    "aquarium cleaning Perth",
     "aquarium technician Perth",
-    "reef tank servicing",
-    "aquarium installations WA",
-    "aquarium equipment setup",
+    "Perth aquarium services",
+    "aquarium relocation Perth",
+    "reef aquarium maintenance Perth",
+    "aquarium installation Perth",
   ],
   icons: {
     icon: [
@@ -48,19 +50,25 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   openGraph: {
-    title: "West Coast Aquarium Services | Perth Aquarium Technician",
+    title: "Perth Aquarium Maintenance | West Coast Aquarium",
     description:
-      "Bespoke aquarium installations, maintenance, and equipment support across Perth metro and surrounds.",
+      "Perth aquarium maintenance, cleaning, relocations, and installations for homes and businesses. West Coast Aquarium provides clear reports and reliable visits.",
     url: "https://westcoastaquariumservices.com.au",
     siteName: "West Coast Aquarium Services",
     locale: "en_AU",
     type: "website",
+    images: [
+      {
+        url: businessInfo.image,
+        alt: "Reef aquarium coral closeup",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "West Coast Aquarium Services | Perth Aquarium Technician",
+    title: "Perth Aquarium Maintenance | West Coast Aquarium",
     description:
-      "Bespoke aquarium installations, maintenance, and equipment support across Perth metro and surrounds.",
+      "Perth aquarium maintenance, cleaning, relocations, and installations for homes and businesses. West Coast Aquarium provides clear reports and reliable visits.",
   },
 };
 

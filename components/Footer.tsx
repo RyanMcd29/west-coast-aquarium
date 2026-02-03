@@ -4,6 +4,7 @@ import Logo from "./Logo";
 
 const footerLinks = [
   { href: "/services", label: "Services" },
+  { href: "/perth-aquarium-services", label: "Service area" },
   { href: "/bookings", label: "Bookings" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },

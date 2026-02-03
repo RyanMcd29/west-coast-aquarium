@@ -2,11 +2,27 @@ import type { Metadata } from "next";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import BookingForm from "@/components/BookingForm";
+import { siteUrl } from "@/lib/seo";
+
+const heroImageSrc = "/images/reef-aquarium-sump-maintenance.webp";
+const heroImageAlt = "Reef aquarium maintenance setup with sump access";
 
 export const metadata: Metadata = {
-  title: "Request a Consultation",
+  title: "Perth Aquarium Consultation",
   description:
-    "Request a consultation for aquarium maintenance, installations, or equipment support in Perth metro.",
+    "Request a consultation for aquarium maintenance, cleaning, relocations, or installations in Perth metro and get a tailored service plan with clear next steps.",
+  openGraph: {
+    title: "Perth Aquarium Consultation",
+    description:
+      "Request a consultation for aquarium maintenance, cleaning, relocations, or installations in Perth metro and get a tailored service plan with clear next steps.",
+    url: `${siteUrl}/bookings`,
+    images: [
+      {
+        url: heroImageSrc,
+        alt: heroImageAlt,
+      },
+    ],
+  },
 };
 
 const bookingNotes = [
@@ -22,8 +38,8 @@ export default function BookingsPage() {
         eyebrow="Bookings"
         title="Request a consultation"
         description="Tell us about your aquarium and we’ll prepare a tailored service plan. We work with residential and commercial tanks across Perth metro and surrounds."
-        imageSrc="/images/reef-aquarium-sump-maintenance.webp"
-        imageAlt="Reef aquarium maintenance setup with sump access"
+        imageSrc={heroImageSrc}
+        imageAlt={heroImageAlt}
       />
 
       <section className="py-16">

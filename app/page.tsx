@@ -71,6 +71,12 @@ export default function Home() {
                   Responsive service windows and clear communication from
                   assessment to handover.
                 </p>
+                <Link
+                  href="/perth-aquarium-services"
+                  className="mt-3 inline-flex text-xs font-semibold text-primary"
+                >
+                  View service area
+                </Link>
               </div>
               <div className="flat-panel p-4">
                 <p className="font-semibold text-foreground">Detail-first care</p>

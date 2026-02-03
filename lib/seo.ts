@@ -3,7 +3,7 @@ export const siteUrl = "https://westcoastaquariumservices.com.au";
 export const businessInfo = {
   name: "West Coast Aquarium Services",
   description:
-    "Aquarium installations, maintenance, parameter logging, and equipment support for Perth metro homes and businesses.",
+    "Aquarium maintenance, cleaning, relocations, installations, and equipment support for Perth metro homes and businesses.",
   email: "mario@westcoastaquariumservices.com.au",
   telephone: "0466 961 437",
   areaServed: "Perth metro and surrounds",
@@ -34,27 +34,75 @@ export const servicesJsonLd = {
   itemListElement: [
     {
       "@type": "Service",
-      name: "Aquarium installations and relocations",
+      name: "Aquarium maintenance and servicing",
       areaServed: businessInfo.areaServed,
-      provider: businessInfo.name,
+      provider: {
+        "@type": "LocalBusiness",
+        name: businessInfo.name,
+        url: siteUrl,
+        telephone: businessInfo.telephone,
+      },
+      url: `${siteUrl}/services/aquarium-maintenance-perth`,
     },
     {
       "@type": "Service",
-      name: "Routine aquarium maintenance and cleaning",
+      name: "Aquarium cleaning and algae control",
       areaServed: businessInfo.areaServed,
-      provider: businessInfo.name,
+      provider: {
+        "@type": "LocalBusiness",
+        name: businessInfo.name,
+        url: siteUrl,
+        telephone: businessInfo.telephone,
+      },
+      url: `${siteUrl}/services/aquarium-cleaning-perth`,
     },
     {
       "@type": "Service",
-      name: "Parameter logging and stability checks",
+      name: "Aquarium relocations",
       areaServed: businessInfo.areaServed,
-      provider: businessInfo.name,
+      provider: {
+        "@type": "LocalBusiness",
+        name: businessInfo.name,
+        url: siteUrl,
+        telephone: businessInfo.telephone,
+      },
+      url: `${siteUrl}/services/aquarium-relocation-perth`,
     },
     {
       "@type": "Service",
-      name: "Aquarium equipment installation",
+      name: "Aquarium installations and setup",
       areaServed: businessInfo.areaServed,
-      provider: businessInfo.name,
+      provider: {
+        "@type": "LocalBusiness",
+        name: businessInfo.name,
+        url: siteUrl,
+        telephone: businessInfo.telephone,
+      },
+      url: `${siteUrl}/services/aquarium-installation-perth`,
+    },
+    {
+      "@type": "Service",
+      name: "Commercial aquarium maintenance",
+      areaServed: businessInfo.areaServed,
+      provider: {
+        "@type": "LocalBusiness",
+        name: businessInfo.name,
+        url: siteUrl,
+        telephone: businessInfo.telephone,
+      },
+      url: `${siteUrl}/services/commercial-aquarium-maintenance-perth`,
+    },
+    {
+      "@type": "Service",
+      name: "Reef aquarium maintenance",
+      areaServed: businessInfo.areaServed,
+      provider: {
+        "@type": "LocalBusiness",
+        name: businessInfo.name,
+        url: siteUrl,
+        telephone: businessInfo.telephone,
+      },
+      url: `${siteUrl}/services/reef-aquarium-maintenance-perth`,
     },
   ],
 };

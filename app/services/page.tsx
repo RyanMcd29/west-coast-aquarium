@@ -5,36 +5,35 @@ import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import SeoJsonLd from "@/components/SeoJsonLd";
 import { withBasePath } from "@/lib/paths";
-import { faqJsonLd, servicesJsonLd } from "@/lib/seo";
+import { faqJsonLd, servicesJsonLd, siteUrl } from "@/lib/seo";
+import { servicePages } from "@/lib/service-pages";
+
+const heroImageSrc = "/images/reef-aquarium-white-cabinet.webp";
+const heroImageAlt = "Modern reef aquarium installation with lighting";
 
 export const metadata: Metadata = {
-  title: "Aquarium Services",
+  title: "Perth Aquarium Services",
   description:
-    "Aquarium installations, relocations, maintenance, parameter logging, and equipment setup for Perth metro homes and businesses.",
+    "Perth aquarium services for maintenance, cleaning, relocations, and installations, with safe handling, clear schedules, and care for Perth homes and businesses.",
+  openGraph: {
+    title: "Perth Aquarium Services",
+    description:
+      "Perth aquarium services for maintenance, cleaning, relocations, and installations, with safe handling, clear schedules, and care for Perth homes and businesses.",
+    url: `${siteUrl}/services`,
+    images: [
+      {
+        url: heroImageSrc,
+        alt: heroImageAlt,
+      },
+    ],
+  },
 };
 
-const services = [
-  {
-    title: "Tank installations & relocations",
-    detail:
-      "Design, delivery, and setup for new aquariums plus safe relocation of existing systems, including livestock handling and re-balancing.",
-  },
-  {
-    title: "Routine maintenance & cleaning",
-    detail:
-      "Scheduled cleans, algae management, water changes, and equipment checks to keep your system stable and presentation-ready.",
-  },
-  {
-    title: "Parameter logging",
-    detail:
-      "Consistent testing and logging of critical parameters with guidance on any adjustments needed between visits.",
-  },
-  {
-    title: "Equipment installation",
-    detail:
-      "Lighting, pumps, filtration, dosing, and automation upgrades installed and calibrated to suit your tank.",
-  },
-];
+const serviceCards = servicePages.map((service) => ({
+  title: service.title,
+  detail: service.summary,
+  href: `/services/${service.slug}`,
+}));
 
 const inclusions = [
   "System assessment and maintenance checklist tailored to your tank",
@@ -60,25 +59,29 @@ export default function ServicesPage() {
         eyebrow="Services"
         title="Aquarium support that keeps your system stable and stunning."
         description="Every service is tailored to your tank, livestock, and lifestyle. From new installations to ongoing care, we bring calm, professional expertise to aquariums across Perth metro."
-        imageSrc="/images/reef-aquarium-white-cabinet.webp"
-        imageAlt="Modern reef aquarium installation with lighting"
+        imageSrc={heroImageSrc}
+        imageAlt={heroImageAlt}
       />
 
       <section className="py-16">
         <Container className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-6">
             <h2 className="text-3xl font-semibold">Core service areas</h2>
-            <div className="grid gap-4">
-              {services.map((service) => (
-                <div
-                  key={service.title}
-                  className="flat-panel p-5"
-                >
-                  <h3 className="text-lg font-semibold">{service.title}</h3>
-                  <p className="mt-2 text-sm text-muted">{service.detail}</p>
-                </div>
+            <ul className="space-y-3 text-sm text-muted">
+              {serviceCards.map((service) => (
+                <li key={service.title}>
+                  <Link
+                    href={service.href}
+                    className="transition hover:text-foreground"
+                  >
+                    <span className="font-semibold text-foreground">
+                      {service.title}
+                    </span>
+                    <span className="text-muted"> — {service.detail}</span>
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
           <div className="space-y-6">
             <div className="flat-panel p-6">
@@ -134,6 +137,29 @@ export default function ServicesPage() {
             >
               Request a consultation
             </Link>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16">
+        <Container className="space-y-6">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
+              FAQs
+            </p>
+            <h2 className="text-3xl font-semibold">Common questions</h2>
+          </div>
+          <div className="grid gap-4">
+            {faqJsonLd.mainEntity.map((faq) => (
+              <div key={faq.name} className="flat-panel p-5">
+                <p className="text-sm font-semibold text-foreground">
+                  {faq.name}
+                </p>
+                <p className="mt-2 text-sm text-muted">
+                  {faq.acceptedAnswer.text}
+                </p>
+              </div>
+            ))}
           </div>
         </Container>
       </section>

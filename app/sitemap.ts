@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/seo";
+import { servicePages } from "@/lib/service-pages";
 
 export const dynamic = "force-static";
 
@@ -19,6 +20,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${siteUrl}/perth-aquarium-services`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    ...servicePages.map((page) => ({
+      url: `${siteUrl}/services/${page.slug}`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    })),
     {
       url: `${siteUrl}/bookings`,
       lastModified,

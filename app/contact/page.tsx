@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
+import { businessInfo, siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact Perth Aquarium Services",
   description:
-    "Contact West Coast Aquarium Services for aquarium maintenance, installations, and technical support in Perth metro.",
+    "Contact West Coast Aquarium Services to discuss Perth aquarium maintenance, cleaning, relocations, or installations and receive clear next steps for your tank.",
+  openGraph: {
+    title: "Contact Perth Aquarium Services",
+    description:
+      "Contact West Coast Aquarium Services to discuss Perth aquarium maintenance, cleaning, relocations, or installations and receive clear next steps for your tank.",
+    url: `${siteUrl}/contact`,
+    images: [
+      {
+        url: businessInfo.image,
+        alt: "Reef aquarium coral closeup",
+      },
+    ],
+  },
 };
 
 const contactDetails = [
