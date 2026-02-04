@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update Perth SEO"
+  short_description: "Improve Perth SEO titles/descriptions"
+  default_prompt: "Use $update-perth-seo to refresh SEO metadata for these pages."

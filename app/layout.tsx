@@ -28,8 +28,8 @@ const monoFont = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://westcoastaquariumservices.com.au"),
   title: {
-    default: "Perth Aquarium Maintenance | West Coast Aquarium",
-    template: "%s | West Coast Aquarium",
+    default: "Perth Aquarium Maintenance | West Coast Aquarium Services",
+    template: "%s | West Coast Aquarium Services",
   },
   description:
     "Perth aquarium maintenance, cleaning, relocations, and installations for homes and businesses. West Coast Aquarium provides clear reports and reliable visits.",

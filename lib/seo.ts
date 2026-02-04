@@ -28,85 +28,6 @@ export const localBusinessJsonLd = {
   },
 };
 
-export const servicesJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  itemListElement: [
-    {
-      "@type": "Service",
-      name: "Aquarium maintenance and servicing",
-      areaServed: businessInfo.areaServed,
-      provider: {
-        "@type": "LocalBusiness",
-        name: businessInfo.name,
-        url: siteUrl,
-        telephone: businessInfo.telephone,
-      },
-      url: `${siteUrl}/services/aquarium-maintenance-perth`,
-    },
-    {
-      "@type": "Service",
-      name: "Aquarium cleaning and algae control",
-      areaServed: businessInfo.areaServed,
-      provider: {
-        "@type": "LocalBusiness",
-        name: businessInfo.name,
-        url: siteUrl,
-        telephone: businessInfo.telephone,
-      },
-      url: `${siteUrl}/services/aquarium-cleaning-perth`,
-    },
-    {
-      "@type": "Service",
-      name: "Aquarium relocations",
-      areaServed: businessInfo.areaServed,
-      provider: {
-        "@type": "LocalBusiness",
-        name: businessInfo.name,
-        url: siteUrl,
-        telephone: businessInfo.telephone,
-      },
-      url: `${siteUrl}/services/aquarium-relocation-perth`,
-    },
-    {
-      "@type": "Service",
-      name: "Aquarium installations and setup",
-      areaServed: businessInfo.areaServed,
-      provider: {
-        "@type": "LocalBusiness",
-        name: businessInfo.name,
-        url: siteUrl,
-        telephone: businessInfo.telephone,
-      },
-      url: `${siteUrl}/services/aquarium-installation-perth`,
-    },
-    {
-      "@type": "Service",
-      name: "Commercial aquarium maintenance",
-      areaServed: businessInfo.areaServed,
-      provider: {
-        "@type": "LocalBusiness",
-        name: businessInfo.name,
-        url: siteUrl,
-        telephone: businessInfo.telephone,
-      },
-      url: `${siteUrl}/services/commercial-aquarium-maintenance-perth`,
-    },
-    {
-      "@type": "Service",
-      name: "Reef aquarium maintenance",
-      areaServed: businessInfo.areaServed,
-      provider: {
-        "@type": "LocalBusiness",
-        name: businessInfo.name,
-        url: siteUrl,
-        telephone: businessInfo.telephone,
-      },
-      url: `${siteUrl}/services/reef-aquarium-maintenance-perth`,
-    },
-  ],
-};
-
 export const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -117,7 +38,7 @@ export const faqJsonLd = {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "Most systems benefit from fortnightly or monthly maintenance, depending on stocking and filtration. We tailor the schedule to your tank’s needs.",
+          "Most systems benefit from fortnightly or monthly aquarium maintenance, depending on stocking and filtration. We tailor the schedule to your tank’s needs.",
       },
     },
     {
@@ -126,7 +47,25 @@ export const faqJsonLd = {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "Yes. We service freshwater, marine, and reef aquariums across Perth metro, including system setups and ongoing care.",
+          "Yes. We service freshwater, marine, and reef aquariums across Perth metro, including system setups, fish tank cleaning, and ongoing care.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does aquarium maintenance cost in Perth?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text:
+          "Pricing depends on tank size, livestock, equipment complexity, and visit frequency. We provide a tailored quote after a quick consultation.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you offer fish tank cleaning for offices and hospitality venues?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text:
+          "Yes. We provide commercial aquarium maintenance and fish tank cleaning for offices, hotels, restaurants, and reception areas with flexible scheduling.",
       },
     },
     {

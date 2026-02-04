@@ -1,30 +1,14 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
+import { buildPageMetadata } from "@/lib/metadata";
+import { aboutSeo } from "@/lib/page-seo/about";
 import { withBasePath } from "@/lib/paths";
-import { siteUrl } from "@/lib/seo";
 
 const heroImageSrc = "/images/living-room-reef-aquarium.webp";
 const heroImageAlt = "Living room reef aquarium installation";
 
-export const metadata: Metadata = {
-  title: "About Mario, Perth Aquarium Technician",
-  description:
-    "Meet Mario, the Perth aquarium technician behind West Coast Aquarium Services, providing maintenance, installations, and relocations for homes and businesses.",
-  openGraph: {
-    title: "About Mario, Perth Aquarium Technician",
-    description:
-      "Meet Mario, the Perth aquarium technician behind West Coast Aquarium Services, providing maintenance, installations, and relocations for homes and businesses.",
-    url: `${siteUrl}/about`,
-    images: [
-      {
-        url: heroImageSrc,
-        alt: heroImageAlt,
-      },
-    ],
-  },
-};
+export const metadata = buildPageMetadata(aboutSeo);
 
 const values = [
   {

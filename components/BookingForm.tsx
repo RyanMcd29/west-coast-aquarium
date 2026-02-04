@@ -12,9 +12,14 @@ const serviceOptions = [
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
-export default function BookingForm() {
+type BookingFormProps = {
+  accessKey: string;
+};
+
+export default function BookingForm({ accessKey }: BookingFormProps) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const isConfigured = Boolean(accessKey);
 
   const fieldClassName =
     "flat-field w-full px-3 py-2 text-sm text-foreground placeholder:text-muted/70 transition-colors focus:outline-none";
@@ -22,11 +27,14 @@ export default function BookingForm() {
   const optionCardClassName =
     "flat-option flex items-start gap-3 px-3 py-2 text-sm text-muted transition-colors";
 
-  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
-  const isConfigured = Boolean(accessKey);
-
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!accessKey) {
+      setStatus("error");
+      setErrorMessage("Form is not configured yet. Please try again later.");
+      return;
+    }
+
     setStatus("submitting");
     setErrorMessage("");
 
@@ -70,8 +78,10 @@ export default function BookingForm() {
       {!isConfigured && (
         <div className="flat-alert bg-amber-50 px-4 py-3 text-sm text-amber-900">
           Add your Web3Forms access key to{" "}
-          <span className="font-semibold">NEXT_PUBLIC_WEB3FORMS_KEY</span> to
-          enable submissions.
+          <span className="font-semibold">form-access-key</span> in your{" "}
+          <span className="font-semibold">.env</span> file to enable
+          submissions. You can also use{" "}
+          <span className="font-semibold">NEXT_PUBLIC_WEB3FORMS_KEY</span>.
         </div>
       )}
 

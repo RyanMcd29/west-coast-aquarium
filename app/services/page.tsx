@@ -1,33 +1,19 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import SeoJsonLd from "@/components/SeoJsonLd";
+import HighlightedServices from "@/components/services/HighlightedServices";
+import { buildPageMetadata } from "@/lib/metadata";
+import { servicesSeo } from "@/lib/page-seo/services";
 import { withBasePath } from "@/lib/paths";
-import { faqJsonLd, servicesJsonLd, siteUrl } from "@/lib/seo";
+import { businessInfo, faqJsonLd, siteUrl } from "@/lib/seo";
 import { servicePages } from "@/lib/service-pages";
 
 const heroImageSrc = "/images/reef-aquarium-white-cabinet.webp";
 const heroImageAlt = "Modern reef aquarium installation with lighting";
 
-export const metadata: Metadata = {
-  title: "Perth Aquarium Services",
-  description:
-    "Perth aquarium services for maintenance, cleaning, relocations, and installations, with safe handling, clear schedules, and care for Perth homes and businesses.",
-  openGraph: {
-    title: "Perth Aquarium Services",
-    description:
-      "Perth aquarium services for maintenance, cleaning, relocations, and installations, with safe handling, clear schedules, and care for Perth homes and businesses.",
-    url: `${siteUrl}/services`,
-    images: [
-      {
-        url: heroImageSrc,
-        alt: heroImageAlt,
-      },
-    ],
-  },
-};
+export const metadata = buildPageMetadata(servicesSeo);
 
 const serviceCards = servicePages.map((service) => ({
   title: service.title,
@@ -35,19 +21,54 @@ const serviceCards = servicePages.map((service) => ({
   href: `/services/${service.slug}`,
 }));
 
+const servicesJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: servicePages.map((service) => ({
+    "@type": "Service",
+    name: service.seoTitle,
+    areaServed: businessInfo.areaServed,
+    provider: {
+      "@type": "LocalBusiness",
+      name: businessInfo.name,
+      url: siteUrl,
+      telephone: businessInfo.telephone,
+    },
+    url: `${siteUrl}/services/${service.slug}`,
+  })),
+};
+
 const inclusions = [
-  "System assessment and maintenance checklist tailored to your tank",
+  "Aquarium water testing and parameter logging with clear notes",
+  "Algae control, glass cleaning, and presentation checks",
+  "Filter, pump, and sump cleaning with care for biofilms",
   "Safe handling of livestock and coral during any service work",
-  "Cleaning of glass, pumps, and filters with care for biofilms",
-  "Water testing with clear notes on stability and trends",
   "Recommendations on stocking, feeding, and equipment tuning",
 ];
 
 const idealFor = [
-  "Busy professionals who want a consistent care schedule",
-  "Hospitality venues and offices that need a spotless display",
-  "Reef keepers who value steady parameters and reef health",
+  "Busy professionals who want consistent aquarium servicing",
+  "Hospitality venues and offices that need fish tank cleaning",
+  "Reef keepers who value stable parameters and coral health",
   "New tank owners looking for a confident setup process",
+];
+
+const maintenancePlans = [
+  {
+    title: "Weekly maintenance",
+    description:
+      "Ideal for high-visibility displays, heavy stocking, and reef systems that need close monitoring.",
+  },
+  {
+    title: "Fortnightly maintenance",
+    description:
+      "A balanced schedule for aquarium maintenance, water testing, and algae control.",
+  },
+  {
+    title: "Monthly maintenance",
+    description:
+      "Seasonal servicing for stable systems with lighter stocking and consistent parameters.",
+  },
 ];
 
 export default function ServicesPage() {
@@ -58,10 +79,12 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Services"
         title="Aquarium support that keeps your system stable and stunning."
-        description="Every service is tailored to your tank, livestock, and lifestyle. From new installations to ongoing care, we bring calm, professional expertise to aquariums across Perth metro."
+        description="Every service is tailored to your tank, livestock, and lifestyle. From new installations to ongoing care, we deliver Perth aquarium maintenance, fish tank cleaning, reef support, and commercial display care across the metro."
         imageSrc={heroImageSrc}
         imageAlt={heroImageAlt}
       />
+
+      <HighlightedServices showCta={false} />
 
       <section className="py-16">
         <Container className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
@@ -111,6 +134,33 @@ export default function ServicesPage() {
       </section>
 
       <section className="bg-surface-elevated py-16">
+        <Container className="space-y-8">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
+              Maintenance plans
+            </p>
+            <h2 className="text-3xl font-semibold">
+              Aquarium maintenance built around your schedule
+            </h2>
+            <p className="max-w-2xl text-muted">
+              Weekly, fortnightly, or monthly plans help keep parameters stable,
+              presentation sharp, and your aquarium running smoothly.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {maintenancePlans.map((plan) => (
+              <div key={plan.title} className="flat-panel p-5">
+                <p className="text-sm font-semibold text-foreground">
+                  {plan.title}
+                </p>
+                <p className="mt-2 text-sm text-muted">{plan.description}</p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-surface-elevated py-16">
         <Container className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="relative h-72 overflow-hidden">
             <Image
@@ -128,8 +178,9 @@ export default function ServicesPage() {
             <p className="text-muted">
               We provide flexible service windows across Perth metro, with clear
               communication and follow-up notes so you always know what was done
-              and what to expect next. Whether you need a fortnightly clean or a
-              seasonal refresh, we keep your system thriving.
+              and what to expect next. Whether you need weekly aquarium
+              maintenance, a fortnightly clean, or a seasonal refresh, we keep
+              your system thriving.
             </p>
             <Link
               href="/bookings"

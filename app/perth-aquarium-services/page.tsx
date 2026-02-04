@@ -1,29 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
-import { businessInfo, siteUrl } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/metadata";
+import { serviceAreaSeo } from "@/lib/page-seo/service-area";
+import { businessInfo } from "@/lib/seo";
 
 const heroImageSrc = "/images/reef-aquarium-white-cabinet.webp";
 const heroImageAlt = "Modern reef aquarium in a living space";
 
-export const metadata: Metadata = {
-  title: "Perth Aquarium Services",
-  description:
-    "Perth aquarium services across the metro area and nearby suburbs, covering maintenance, cleaning, relocations, and installations with flexible scheduling.",
-  openGraph: {
-    title: "Perth Aquarium Services",
-    description:
-      "Perth aquarium services across the metro area and nearby suburbs, covering maintenance, cleaning, relocations, and installations with flexible scheduling.",
-    url: `${siteUrl}/perth-aquarium-services`,
-    images: [
-      {
-        url: heroImageSrc,
-        alt: heroImageAlt,
-      },
-    ],
-  },
-};
+export const metadata = buildPageMetadata(serviceAreaSeo);
 
 const serviceRegions = [
   {
@@ -88,7 +73,7 @@ export default function PerthAquariumServicesPage() {
       <PageHero
         eyebrow="Service area"
         title="Perth aquarium services across the metro area"
-        description="We provide aquarium maintenance, cleaning, relocation, and installation across the Perth metro area and surrounds. If you’re outside these suburbs, let us know your location and we’ll confirm travel options."
+        description="We provide aquarium maintenance, fish tank cleaning, relocation, and installation across Perth metro and surrounds. If you’re outside these suburbs, let us know your location and we’ll confirm travel options."
         imageSrc={heroImageSrc}
         imageAlt={heroImageAlt}
       />
@@ -97,6 +82,11 @@ export default function PerthAquariumServicesPage() {
         <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-6">
             <h2 className="text-3xl font-semibold">Where we work</h2>
+            <p className="text-muted">
+              Perth metro aquarium servicing with a local aquarium technician
+              who confirms travel options by suburb, tank size, and service
+              type.
+            </p>
             <p className="text-muted">
               {businessInfo.name} focuses on {businessInfo.areaServed}. We
               prioritise responsive scheduling and clear communication. Travel

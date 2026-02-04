@@ -2,26 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
 import HeroMedia from "@/components/HeroMedia";
+import HighlightedServices from "@/components/services/HighlightedServices";
+import { buildPageMetadata } from "@/lib/metadata";
 import { withBasePath } from "@/lib/paths";
+import { homeSeo } from "@/lib/page-seo/home";
 
-const services = [
+export const metadata = buildPageMetadata(homeSeo);
+
+const maintenancePlans = [
   {
-    title: "Installations & relocations",
+    title: "Weekly care",
     description:
-      "From new tank builds to careful moves, we handle logistics, plumbing, and safe livestock transfers.",
-    image: "/images/reef-aquarium-white-cabinet.webp",
+      "Ideal for high-visibility displays, heavy stocking, or reef systems that need close attention.",
   },
   {
-    title: "Routine maintenance",
+    title: "Fortnightly care",
     description:
-      "Scheduled cleans, water changes, and system inspections that keep parameters stable and presentation sharp.",
-    image: "/images/reef-aquarium-black-cabinet.webp",
+      "A balanced schedule for stable aquariums that need regular cleaning and water testing.",
   },
   {
-    title: "Equipment & filtration",
+    title: "Monthly care",
     description:
-      "Sump optimisation, dosing setup, lighting calibration, and hardware installations that protect your investment.",
-    image: "/images/sump-filtration-equipment.webp",
+      "Seasonal servicing for established tanks with consistent parameters and lighter stocking.",
   },
 ];
 
@@ -46,8 +48,9 @@ export default function Home() {
               <p className="max-w-xl text-lg text-muted">
                 West Coast Aquarium Services keeps your system clean, stable, and
                 show-ready. From installations and relocations to routine
-                maintenance and parameter logging, we deliver confident care for
-                residential and commercial aquariums across Perth metro.
+                maintenance, fish tank cleaning, and aquarium servicing, we
+                deliver confident care for residential and commercial aquariums
+                across Perth metro.
               </p>
             </div>
             <div className="flex flex-wrap gap-4">
@@ -81,8 +84,8 @@ export default function Home() {
               <div className="flat-panel p-4">
                 <p className="font-semibold text-foreground">Detail-first care</p>
                 <p className="mt-2">
-                  Parameter logging and preventative maintenance that keep your
-                  ecosystem balanced.
+                  Aquarium water testing, parameter logging, and preventative
+                  maintenance that keep your ecosystem balanced.
                 </p>
               </div>
             </div>
@@ -101,37 +104,29 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="bg-surface-elevated py-16">
-        <Container className="space-y-10">
+      <HighlightedServices />
+
+      <section className="py-16">
+        <Container className="space-y-8">
           <div className="space-y-3">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
-              Core services
+              Maintenance plans
             </p>
-            <h2 className="text-3xl font-semibold">Comprehensive support</h2>
+            <h2 className="text-3xl font-semibold">
+              Flexible aquarium servicing schedules
+            </h2>
             <p className="max-w-2xl text-muted">
-              Whether you need a new setup, a safe relocation, or reliable
-              ongoing care, each visit is tailored to the needs of your aquarium
-              and livestock.
+              Choose weekly, fortnightly, or monthly aquarium maintenance plans
+              that match your stocking, display goals, and reef stability needs.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {services.map((service) => (
-              <div key={service.title} className="flat-panel-elevated p-5">
-                <div className="relative h-44 overflow-hidden">
-                  <Image
-                    src={withBasePath(service.image)}
-                    alt={service.title}
-                    fill
-                    sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="mt-4 text-lg font-semibold">
-                  {service.title}
-                </h3>
-                <p className="mt-2 text-sm text-muted">
-                  {service.description}
+          <div className="grid gap-4 sm:grid-cols-3">
+            {maintenancePlans.map((plan) => (
+              <div key={plan.title} className="flat-panel p-5">
+                <p className="text-sm font-semibold text-foreground">
+                  {plan.title}
                 </p>
+                <p className="mt-2 text-sm text-muted">{plan.description}</p>
               </div>
             ))}
           </div>

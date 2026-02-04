@@ -1,29 +1,13 @@
-import type { Metadata } from "next";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import BookingForm from "@/components/BookingForm";
-import { siteUrl } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/metadata";
+import { bookingsSeo } from "@/lib/page-seo/bookings";
 
 const heroImageSrc = "/images/reef-aquarium-sump-maintenance.webp";
 const heroImageAlt = "Reef aquarium maintenance setup with sump access";
 
-export const metadata: Metadata = {
-  title: "Perth Aquarium Consultation",
-  description:
-    "Request a consultation for aquarium maintenance, cleaning, relocations, or installations in Perth metro and get a tailored service plan with clear next steps.",
-  openGraph: {
-    title: "Perth Aquarium Consultation",
-    description:
-      "Request a consultation for aquarium maintenance, cleaning, relocations, or installations in Perth metro and get a tailored service plan with clear next steps.",
-    url: `${siteUrl}/bookings`,
-    images: [
-      {
-        url: heroImageSrc,
-        alt: heroImageAlt,
-      },
-    ],
-  },
-};
+export const metadata = buildPageMetadata(bookingsSeo);
 
 const bookingNotes = [
   "We reply within 1–2 business days with availability and next steps.",
@@ -32,6 +16,11 @@ const bookingNotes = [
 ];
 
 export default function BookingsPage() {
+  const accessKey =
+    process.env["form-access-key"] ??
+    process.env.NEXT_PUBLIC_WEB3FORMS_KEY ??
+    "";
+
   return (
     <div>
       <PageHero
@@ -45,7 +34,7 @@ export default function BookingsPage() {
       <section className="py-16">
         <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="flat-panel p-6">
-            <BookingForm />
+            <BookingForm accessKey={accessKey} />
           </div>
           <div className="space-y-6">
             <div className="flat-panel p-6">
