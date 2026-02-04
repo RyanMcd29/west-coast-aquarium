@@ -17,7 +17,7 @@ export const aquariumMaintenancePage: ServicePage = {
   ],
   hero: {
     eyebrow: "Maintenance",
-    title: "Aquarium maintenance that keeps Perth tanks stable.",
+    title: "Aquarium maintenance that keeps your tank stable.",
     description:
       "Reliable aquarium and fish tank servicing for freshwater, marine, and reef systems. We clean, test, and tune your equipment to keep your aquarium clear and consistent. Servicing Perth metro and surrounds.",
     imageSrc: "/images/reef-aquarium-sump-maintenance.webp",
