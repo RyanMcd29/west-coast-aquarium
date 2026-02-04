@@ -252,7 +252,7 @@ export default function PerthAquariumServicesPage() {
         id="service-area-breadcrumbs-jsonld"
       />
       <PageHero
-        eyebrow="Service area"
+        // eyebrow="Service area"
         title="Perth aquarium services across the metro area"
         description="We provide aquarium maintenance, fish tank cleaning, relocation, and installation across Perth metro and surrounds. If you’re outside these suburbs, let us know your location and we’ll confirm travel options."
         imageSrc={heroImageSrc}
