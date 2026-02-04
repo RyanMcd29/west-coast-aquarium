@@ -81,7 +81,7 @@ export default function HeaderClient({
   };
 
   return (
-    <header className="border-b border-outline/70 bg-surface/80 backdrop-blur">
+    <header className="relative z-[1000] border-b border-outline/70 bg-surface/80 backdrop-blur">
       <Container className="flex items-center justify-between py-4">
         <Logo />
         <div className="flex items-center gap-4">
@@ -106,7 +106,7 @@ export default function HeaderClient({
               <div
                 role="menu"
                 aria-hidden={!isServicesOpen}
-                className={`absolute left-0 top-full z-20 mt-3 w-72 rounded-2xl border border-outline/70 bg-white p-3 text-sm text-foreground shadow-xl transition ${
+                className={`absolute left-0 top-full z-[1100] mt-3 w-72 rounded-2xl border border-outline/70 bg-white p-3 text-sm text-foreground shadow-xl transition ${
                   isServicesOpen
                     ? "pointer-events-auto translate-y-0 opacity-100"
                     : "pointer-events-none -translate-y-2 opacity-0"
