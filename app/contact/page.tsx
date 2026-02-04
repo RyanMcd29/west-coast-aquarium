@@ -3,31 +3,14 @@ import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import { businessInfo, siteUrl } from "@/lib/seo";
 
-const seo = {
-  title: "Contact Aquarium Maintenance Perth",
-  description:
-    "Contact us for aquarium maintenance Perth, aquarium cleaning Perth, and fish tank service across Perth metro. Request a booking or quote today for your tank.",
-};
-
-const MetaTag = ({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) => (
-  <div hidden>
-    <p>{title}</p>
-    <p>{description}</p>
-  </div>
-);
-
 export const metadata: Metadata = {
-  title: seo.title,
-  description: seo.description,
+  title: "Contact Perth Aquarium Services",
+  description:
+    "Contact West Coast Aquarium Services to discuss Perth aquarium maintenance, cleaning, relocations, or installations and receive clear next steps for your tank.",
   openGraph: {
-    title: seo.title,
-    description: seo.description,
+    title: "Contact Perth Aquarium Services",
+    description:
+      "Contact West Coast Aquarium Services to discuss Perth aquarium maintenance, cleaning, relocations, or installations and receive clear next steps for your tank.",
     url: `${siteUrl}/contact`,
     images: [
       {
@@ -58,11 +41,10 @@ const contactDetails = [
 export default function ContactPage() {
   return (
     <div>
-      <MetaTag title={seo.title} description={seo.description} />
       <PageHero
         eyebrow="Contact"
-        title={seo.title}
-        description={seo.description}
+        title="Let’s keep your aquarium running perfectly."
+        description="Reach out for installations, maintenance visits, or equipment support. We’ll reply promptly with next steps."
       />
 
       <section className="py-16">
@@ -95,9 +77,9 @@ export default function ContactPage() {
             <h3 className="text-lg font-semibold">Operating style</h3>
             <p className="mt-3 text-sm text-muted">
               We focus on clear communication, safe handling of livestock, and
-              tidy finishes. If you need aquarium cleaning Perth families book,
-              fish tank service, or ongoing care, include a few details so we
-              can guide you efficiently.
+              tidy finishes. If you’re preparing for a move, new installation,
+              or ongoing care, include a few details so we can guide you
+              efficiently.
             </p>
             <div className="flat-panel-elevated mt-6 px-4 py-3 text-sm text-muted">
               <p className="font-semibold text-foreground">Tip</p>

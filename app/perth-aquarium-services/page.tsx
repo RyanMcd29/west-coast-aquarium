@@ -7,31 +7,14 @@ import { businessInfo, siteUrl } from "@/lib/seo";
 const heroImageSrc = "/images/reef-aquarium-white-cabinet.webp";
 const heroImageAlt = "Modern reef aquarium in a living space";
 
-const seo = {
-  title: "Perth Aquarium Services for Maintenance and Cleaning",
-  description:
-    "Perth aquarium services across Perth metro, including northern, southern, eastern, and western suburbs. We deliver aquarium maintenance and cleaning near you.",
-};
-
-const MetaTag = ({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) => (
-  <div hidden>
-    <p>{title}</p>
-    <p>{description}</p>
-  </div>
-);
-
 export const metadata: Metadata = {
-  title: seo.title,
-  description: seo.description,
+  title: "Perth Aquarium Services",
+  description:
+    "Perth aquarium services across the metro area and nearby suburbs, covering maintenance, cleaning, relocations, and installations with flexible scheduling.",
   openGraph: {
-    title: seo.title,
-    description: seo.description,
+    title: "Perth Aquarium Services",
+    description:
+      "Perth aquarium services across the metro area and nearby suburbs, covering maintenance, cleaning, relocations, and installations with flexible scheduling.",
     url: `${siteUrl}/perth-aquarium-services`,
     images: [
       {
@@ -102,11 +85,10 @@ const serviceRegions = [
 export default function PerthAquariumServicesPage() {
   return (
     <div>
-      <MetaTag title={seo.title} description={seo.description} />
       <PageHero
         eyebrow="Service area"
-        title={seo.title}
-        description={seo.description}
+        title="Perth aquarium services across the metro area"
+        description="We provide aquarium maintenance, cleaning, relocation, and installation across the Perth metro area and surrounds. If you’re outside these suburbs, let us know your location and we’ll confirm travel options."
         imageSrc={heroImageSrc}
         imageAlt={heroImageAlt}
       />
@@ -116,10 +98,9 @@ export default function PerthAquariumServicesPage() {
           <div className="space-y-6">
             <h2 className="text-3xl font-semibold">Where we work</h2>
             <p className="text-muted">
-              {businessInfo.name} focuses on Perth metro and nearby northern,
-              southern, eastern, and western suburbs. We prioritise responsive
-              scheduling and clear communication. Travel is confirmed based on
-              your suburb and service type.
+              {businessInfo.name} focuses on {businessInfo.areaServed}. We
+              prioritise responsive scheduling and clear communication. Travel
+              is confirmed based on your suburb and service type.
             </p>
             <div className="grid gap-4">
               {serviceRegions.map((region) => (
@@ -136,9 +117,9 @@ export default function PerthAquariumServicesPage() {
             <div className="flat-panel p-6">
               <h3 className="text-lg font-semibold">Service availability</h3>
               <p className="mt-3 text-sm text-muted">
-                We book scheduled aquarium maintenance Perth WA visits, cleaning,
-                relocation, and installation work. Priority support is available
-                for urgent issues where possible.
+                We book scheduled maintenance, cleaning, relocation, and
+                installation visits. Priority support is available for urgent
+                issues where possible.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
@@ -158,8 +139,7 @@ export default function PerthAquariumServicesPage() {
             <div className="flat-panel p-6">
               <h3 className="text-lg font-semibold">Not sure about coverage?</h3>
               <p className="mt-3 text-sm text-muted">
-                If you are searching for fish tank cleaning near me in Perth,
-                share your suburb, tank size, and preferred timing, and we’ll
+                Share your suburb, tank size, and preferred timing, and we’ll
                 confirm availability and next steps.
               </p>
               <Link
