@@ -42,7 +42,7 @@ export default function Home() {
                 Perth aquarium technician
               </p>
               <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-                Bespoke aquarium care with technical precision and calm,
+                Bespoke aquarium care with technical precision and 
                 professional service.
               </h1>
               <p className="max-w-xl text-lg text-muted">
@@ -67,7 +67,7 @@ export default function Home() {
                 Explore services
               </Link>
             </div>
-            <div className="grid gap-4 text-sm text-muted sm:grid-cols-2">
+            {/* <div className="grid gap-4 text-sm text-muted sm:grid-cols-2">
               <div className="flat-panel p-4">
                 <p className="font-semibold text-foreground">Perth metro focus</p>
                 <p className="mt-2">
@@ -88,7 +88,7 @@ export default function Home() {
                   maintenance that keep your ecosystem balanced.
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="space-y-6">
             <div className="relative h-72 overflow-hidden md:h-80 lg:h-96">

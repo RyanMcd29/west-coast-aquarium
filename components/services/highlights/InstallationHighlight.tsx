@@ -6,7 +6,7 @@ export default function InstallationHighlight() {
       title="Aquarium installation"
       description="Aquarium installation and setup with plumbing, filtration, and lighting calibration."
       href="/services/aquarium-installation-perth"
-      highlights={["Equipment selection guidance", "Cycle support and stocking plan"]}
+      highlights={["Equipment selection guidance", "Ongoing support and stocking plan"]}
     />
   );
 }
