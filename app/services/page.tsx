@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import SeoJsonLd from "@/components/SeoJsonLd";
@@ -36,6 +37,28 @@ const servicesJsonLd = {
     },
     url: `${siteUrl}/services/${service.slug}`,
   })),
+};
+const breadcrumbItems = [
+  { label: "Home", href: "/" },
+  { label: "Services" },
+];
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Services",
+      item: `${siteUrl}/services`,
+    },
+  ],
 };
 
 const inclusions = [
@@ -76,12 +99,14 @@ export default function ServicesPage() {
     <div>
       <SeoJsonLd data={servicesJsonLd} id="services-jsonld" />
       <SeoJsonLd data={faqJsonLd} id="faq-jsonld" />
+      <SeoJsonLd data={breadcrumbJsonLd} id="services-breadcrumbs-jsonld" />
       <PageHero
         eyebrow="Services"
         title="Aquarium support that keeps your system stable and stunning."
         description="Every service is tailored to your tank, livestock, and lifestyle. From new installations to ongoing care, we deliver Perth aquarium maintenance, fish tank cleaning, reef support, and commercial display care across the metro."
         imageSrc={heroImageSrc}
         imageAlt={heroImageAlt}
+        breadcrumbs={<Breadcrumbs items={breadcrumbItems} />}
       />
 
       <HighlightedServices showCta={false} />

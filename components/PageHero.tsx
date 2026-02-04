@@ -8,6 +8,7 @@ type PageHeroProps = {
   eyebrow?: string;
   imageSrc?: string;
   imageAlt?: string;
+  breadcrumbs?: React.ReactNode;
 };
 
 export default function PageHero({
@@ -16,6 +17,7 @@ export default function PageHero({
   eyebrow,
   imageSrc,
   imageAlt = "",
+  breadcrumbs,
 }: PageHeroProps) {
   const resolvedImageSrc = imageSrc ? withBasePath(imageSrc) : undefined;
 
@@ -23,6 +25,7 @@ export default function PageHero({
     <section className="bg-surface-elevated py-16">
       <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="space-y-4">
+          {breadcrumbs ? <div>{breadcrumbs}</div> : null}
           {eyebrow && (
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
               {eyebrow}

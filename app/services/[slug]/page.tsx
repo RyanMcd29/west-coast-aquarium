@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import SeoJsonLd from "@/components/SeoJsonLd";
@@ -69,17 +70,51 @@ export default async function ServiceDetailPage({ params }: PageProps) {
       },
     })),
   };
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/services" },
+    { label: page.title },
+  ];
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Services",
+        item: `${siteUrl}/services`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: page.title,
+        item: `${siteUrl}/services/${page.slug}`,
+      },
+    ],
+  };
 
   return (
     <div>
       <SeoJsonLd data={serviceJsonLd} id={`service-jsonld-${page.slug}`} />
       <SeoJsonLd data={faqJsonLd} id={`service-faq-jsonld-${page.slug}`} />
+      <SeoJsonLd
+        data={breadcrumbJsonLd}
+        id={`service-breadcrumbs-jsonld-${page.slug}`}
+      />
       <PageHero
         eyebrow={page.hero.eyebrow}
         title={page.hero.title}
         description={page.hero.description}
         imageSrc={page.hero.imageSrc}
         imageAlt={page.hero.imageAlt}
+        breadcrumbs={<Breadcrumbs items={breadcrumbItems} />}
       />
 
       <section className="py-16">
