@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Plus_Jakarta_Sans, Sora } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import SeoJsonLd from "@/components/SeoJsonLd";
@@ -91,6 +92,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </div>
+        <SpeedInsights />
       </body>
     </html>
   );
