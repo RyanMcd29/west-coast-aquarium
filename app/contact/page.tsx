@@ -1,7 +1,10 @@
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
+import SeoJsonLd from "@/components/SeoJsonLd";
 import { buildPageMetadata } from "@/lib/metadata";
 import { contactSeo } from "@/lib/page-seo/contact";
+import { siteUrl } from "@/lib/seo";
 
 export const metadata = buildPageMetadata(contactSeo);
 
@@ -21,14 +24,38 @@ const contactDetails = [
     value: "Perth metro and surrounds",
   },
 ];
+const breadcrumbItems = [
+  { label: "Home", href: "/" },
+  { label: "Contact" },
+];
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Contact",
+      item: `${siteUrl}/contact`,
+    },
+  ],
+};
 
 export default function ContactPage() {
   return (
     <div>
+      <SeoJsonLd data={breadcrumbJsonLd} id="contact-breadcrumbs-jsonld" />
       <PageHero
         eyebrow="Contact"
         title="Let’s keep your aquarium running perfectly."
         description="Reach out for installations, maintenance visits, or equipment support. We’ll reply promptly with next steps."
+        breadcrumbs={<Breadcrumbs items={breadcrumbItems} />}
       />
 
       <section className="py-16">

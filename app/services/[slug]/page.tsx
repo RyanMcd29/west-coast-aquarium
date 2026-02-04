@@ -109,7 +109,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         id={`service-breadcrumbs-jsonld-${page.slug}`}
       />
       <PageHero
-        eyebrow={page.hero.eyebrow}
         title={page.hero.title}
         description={page.hero.description}
         imageSrc={page.hero.imageSrc}

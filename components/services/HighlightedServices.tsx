@@ -19,20 +19,22 @@ type HighlightedServicesProps = {
 };
 
 export default function HighlightedServices({
-  eyebrow = "Highlighted services",
-  title = "Aquarium services built for Perth systems",
+  eyebrow,
+  title = "Aquarium services built for freshwater and marine systems",
   description = "Explore maintenance, fish tank cleaning, reef care, commercial support, and specialist services with clear reporting and reliable visits.",
   showCta = true,
   ctaHref = "/services",
   ctaLabel = "View all services",
 }: HighlightedServicesProps) {
   return (
-    <section className="bg-surface-elevated py-16">
+    <section className="bg-surface py-16">
       <Container className="space-y-10">
         <div className="space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
-            {eyebrow}
-          </p>
+          {eyebrow ? (
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
+              {eyebrow}
+            </p>
+          ) : null}
           <h2 className="text-3xl font-semibold">{title}</h2>
           <p className="max-w-3xl text-muted">{description}</p>
         </div>

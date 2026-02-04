@@ -1,8 +1,11 @@
+import BookingForm from "@/components/BookingForm";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
-import BookingForm from "@/components/BookingForm";
+import SeoJsonLd from "@/components/SeoJsonLd";
 import { buildPageMetadata } from "@/lib/metadata";
 import { bookingsSeo } from "@/lib/page-seo/bookings";
+import { siteUrl } from "@/lib/seo";
 
 const heroImageSrc = "/images/reef-aquarium-sump-maintenance.webp";
 const heroImageAlt = "Reef aquarium maintenance setup with sump access";
@@ -14,6 +17,28 @@ const bookingNotes = [
   "Emergency callouts can be arranged where possible.",
   "Please share any recent issues or parameter concerns.",
 ];
+const breadcrumbItems = [
+  { label: "Home", href: "/" },
+  { label: "Bookings" },
+];
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Bookings",
+      item: `${siteUrl}/bookings`,
+    },
+  ],
+};
 
 export default function BookingsPage() {
   const accessKey =
@@ -23,12 +48,14 @@ export default function BookingsPage() {
 
   return (
     <div>
+      <SeoJsonLd data={breadcrumbJsonLd} id="bookings-breadcrumbs-jsonld" />
       <PageHero
         eyebrow="Bookings"
         title="Request a consultation"
         description="Tell us about your aquarium and we’ll prepare a tailored service plan. We work with residential and commercial tanks across Perth metro and surrounds."
         imageSrc={heroImageSrc}
         imageAlt={heroImageAlt}
+        breadcrumbs={<Breadcrumbs items={breadcrumbItems} />}
       />
 
       <section className="py-16">

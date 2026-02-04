@@ -1,9 +1,11 @@
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
+import SeoJsonLd from "@/components/SeoJsonLd";
 import { buildPageMetadata } from "@/lib/metadata";
 import { serviceAreaSeo } from "@/lib/page-seo/service-area";
-import { businessInfo } from "@/lib/seo";
+import { businessInfo, siteUrl } from "@/lib/seo";
 
 const heroImageSrc = "/images/reef-aquarium-white-cabinet.webp";
 const heroImageAlt = "Modern reef aquarium in a living space";
@@ -66,16 +68,43 @@ const serviceRegions = [
     ],
   },
 ];
+const breadcrumbItems = [
+  { label: "Home", href: "/" },
+  { label: "Service area" },
+];
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Service area",
+      item: `${siteUrl}/perth-aquarium-services`,
+    },
+  ],
+};
 
 export default function PerthAquariumServicesPage() {
   return (
     <div>
+      <SeoJsonLd
+        data={breadcrumbJsonLd}
+        id="service-area-breadcrumbs-jsonld"
+      />
       <PageHero
         eyebrow="Service area"
         title="Perth aquarium services across the metro area"
         description="We provide aquarium maintenance, fish tank cleaning, relocation, and installation across Perth metro and surrounds. If you’re outside these suburbs, let us know your location and we’ll confirm travel options."
         imageSrc={heroImageSrc}
         imageAlt={heroImageAlt}
+        breadcrumbs={<Breadcrumbs items={breadcrumbItems} />}
       />
 
       <section className="py-16">

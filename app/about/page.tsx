@@ -1,9 +1,12 @@
 import Image from "next/image";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
+import SeoJsonLd from "@/components/SeoJsonLd";
 import { buildPageMetadata } from "@/lib/metadata";
 import { aboutSeo } from "@/lib/page-seo/about";
 import { withBasePath } from "@/lib/paths";
+import { siteUrl } from "@/lib/seo";
 
 const heroImageSrc = "/images/living-room-reef-aquarium.webp";
 const heroImageAlt = "Living room reef aquarium installation";
@@ -27,16 +30,40 @@ const values = [
       "You’ll always know what was done, what the system needs next, and how to keep things stable between visits.",
   },
 ];
+const breadcrumbItems = [
+  { label: "Home", href: "/" },
+  { label: "About" },
+];
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "About",
+      item: `${siteUrl}/about`,
+    },
+  ],
+};
 
 export default function AboutPage() {
   return (
     <div>
+      <SeoJsonLd data={breadcrumbJsonLd} id="about-breadcrumbs-jsonld" />
       <PageHero
         eyebrow="About"
         title="Hands-on aquarium care with a calm, professional approach."
         description="West Coast Aquarium Services is led by Mario, a Perth-based aquarium technician who specialises in the safe installation, maintenance, and optimisation of marine and freshwater systems."
         imageSrc={heroImageSrc}
         imageAlt={heroImageAlt}
+        breadcrumbs={<Breadcrumbs items={breadcrumbItems} />}
       />
 
       <section className="py-16">
