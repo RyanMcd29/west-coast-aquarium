@@ -51,9 +51,9 @@ export const aquariumMaintenancePage: ServicePage = {
     },
   ],
   outcomes: [
-    "Clearer water and cleaner viewing panels",
-    "Stable parameters with fewer surprises",
-    "Longer equipment life from routine care",
+    "Presentation-ready glass and water clarity between visits",
+    "Steady parameters you can trust",
+    "Equipment that runs clean, quiet, and efficient",
   ],
   faqs: [
     {

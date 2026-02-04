@@ -30,7 +30,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                   {item.label}
                 </Link>
               ) : (
-                <span aria-current="page" className="text-foreground/80">
+                <span aria-current="page" className="text-primary">
                   {item.label}
                 </span>
               )}

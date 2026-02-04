@@ -397,7 +397,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h2 className="text-3xl font-semibold">Typical outcomes</h2>
+              <h2 className="text-3xl font-semibold">What we strive for</h2>
               <ul className="space-y-3 text-sm text-muted">
                 {page.outcomes.map((item) => (
                   <li key={item} className="flex items-center gap-3">

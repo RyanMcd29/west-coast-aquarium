@@ -50,9 +50,9 @@ export const commercialAquariumMaintenancePage: ServicePage = {
     },
   ],
   outcomes: [
-    "Consistently clean, professional display",
-    "Reduced downtime and fewer emergencies",
-    "Clear communication for staff and managers",
+    "A display that looks exceptional day-to-day",
+    "Minimal disruption to staff, guests, and operations",
+    "Proactive communication and forward planning",
   ],
   faqs: [
     {

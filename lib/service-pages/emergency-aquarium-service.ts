@@ -51,9 +51,9 @@ export const emergencyAquariumServicePage: ServicePage = {
     },
   ],
   outcomes: [
-    "Faster recovery for stressed systems",
-    "Clear understanding of the root cause",
-    "Action plan to prevent repeat issues",
+    "Stability restored quickly and safely",
+    "Clear diagnosis of the underlying issue",
+    "A recovery plan that reduces repeat failures",
   ],
   faqs: [
     {

@@ -49,9 +49,9 @@ export const reefAquariumMaintenancePage: ServicePage = {
     },
   ],
   outcomes: [
-    "More stable alkalinity and nutrients",
-    "Healthier coral growth and colour",
-    "Confidence in your system's balance",
+    "Stable alkalinity, calcium, and nutrient balance",
+    "Coral health, colour, and growth supported",
+    "Confidence in dosing and system stability",
   ],
   faqs: [
     {

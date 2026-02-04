@@ -49,9 +49,9 @@ export const aquariumInstallationPage: ServicePage = {
     },
   ],
   outcomes: [
-    "Optimised equipment layout",
-    "Stable, efficient filtration",
-    "Clear guidance for a healthy start",
+    "A layout built for easy access and future maintenance",
+    "Stable, efficient filtration from day one",
+    "Confident guidance for cycling and stocking",
   ],
   faqs: [
     {

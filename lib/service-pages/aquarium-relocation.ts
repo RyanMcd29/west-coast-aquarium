@@ -49,9 +49,9 @@ export const aquariumRelocationPage: ServicePage = {
     },
   ],
   outcomes: [
-    "Minimal livestock stress during transport",
-    "Safe equipment handling and setup",
-    "Faster post-move stability",
+    "Low-stress livestock transport and handling",
+    "Equipment protected, labelled, and reinstalled correctly",
+    "A smooth return to stable parameters",
   ],
   faqs: [
     {

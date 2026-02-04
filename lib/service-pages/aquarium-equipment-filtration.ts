@@ -52,9 +52,9 @@ export const aquariumEquipmentFiltrationPage: ServicePage = {
     },
   ],
   outcomes: [
-    "More stable flow and filtration",
-    "Cleaner equipment performance and reduced noise",
-    "Clear upgrade plan for long-term stability",
+    "Quiet, reliable flow matched to livestock needs",
+    "Filtration tuned for consistent, efficient performance",
+    "A clear upgrade path for long-term stability",
   ],
   faqs: [
     {

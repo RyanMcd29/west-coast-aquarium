@@ -51,9 +51,9 @@ export const aquariumCleaningPage: ServicePage = {
     },
   ],
   outcomes: [
-    "Better visibility and cleaner glass",
-    "Reduced algae pressure",
-    "More consistent filtration performance",
+    "Clear viewing panels and improved clarity",
+    "Algae pressure reduced without over-cleaning",
+    "A healthier, less stressed environment after service",
   ],
   faqs: [
     {
