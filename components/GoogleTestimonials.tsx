@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { withBasePath } from "@/lib/paths";
+import CustomerPhotoGallery, {
+  type CustomerGalleryPhoto,
+} from "./CustomerPhotoGallery";
 import Container from "./Container";
 
 type GoogleTestimonialsProps = {
@@ -22,12 +25,6 @@ type TestimonialReview = {
   time: number | null;
 };
 
-type TestimonialPhoto = {
-  imageUrl: string;
-  authorName: string | null;
-  authorUrl: string | null;
-};
-
 type TestimonialsPayload = {
   placeName: string;
   placeUrl: string | null;
@@ -35,7 +32,7 @@ type TestimonialsPayload = {
   userRatingsTotal: number;
   fetchedAt: number;
   reviews: TestimonialReview[];
-  photos: TestimonialPhoto[];
+  photos: CustomerGalleryPhoto[];
 };
 
 type CacheEnvelope = {
@@ -217,7 +214,7 @@ function setCacheValue(cacheKey: string, payload: TestimonialsPayload) {
   }
 }
 
-function warmImageCache(reviews: TestimonialReview[], photos: TestimonialPhoto[]) {
+function warmImageCache(reviews: TestimonialReview[], photos: CustomerGalleryPhoto[]) {
   if (typeof window === "undefined") {
     return;
   }
@@ -494,7 +491,7 @@ function buildPayloadFromV1(
     })
     .slice(0, reviewLimit);
 
-  const normalizedPhotos: TestimonialPhoto[] = photos
+  const normalizedPhotos: CustomerGalleryPhoto[] = photos
     .map((photo) => {
       if (typeof photo.name !== "string" || !photo.name.trim()) {
         return null;
@@ -512,9 +509,9 @@ function buildPayloadFromV1(
             : null,
         authorUrl:
           typeof attribution?.uri === "string" ? attribution.uri : null,
-      } satisfies TestimonialPhoto;
+      } satisfies CustomerGalleryPhoto;
     })
-    .filter((photo): photo is TestimonialPhoto => photo !== null)
+    .filter((photo): photo is CustomerGalleryPhoto => photo !== null)
     .slice(0, DEFAULT_PHOTO_LIMIT);
 
   return {
@@ -625,7 +622,7 @@ function buildPayload(details: GooglePlaceDetails, reviewLimit: number) {
     })
     .slice(0, reviewLimit);
 
-  const normalizedPhotos: TestimonialPhoto[] = photos
+  const normalizedPhotos: CustomerGalleryPhoto[] = photos
     .flatMap((photo) => {
       try {
         const imageUrl = photo.getUrl({
@@ -638,7 +635,7 @@ function buildPayload(details: GooglePlaceDetails, reviewLimit: number) {
             imageUrl,
             authorName: null,
             authorUrl: null,
-          } satisfies TestimonialPhoto,
+          } satisfies CustomerGalleryPhoto,
         ];
       } catch {
         return [];
@@ -801,7 +798,7 @@ export default function GoogleTestimonials({
         ) : null}
 
         <div className="grid gap-4 lg:grid-cols-[320px_1fr]">
-          <aside className="flat-panel flex h-full flex-col gap-4 p-5">
+          <aside className="flat-panel flex h-[340px] flex-col gap-4 p-5">
             <div className="flex flex-col items-center gap-3">
               <div className="relative h-28 w-[80%] overflow-hidden rounded-2xl bg-surface">
                 <Image
@@ -849,16 +846,16 @@ export default function GoogleTestimonials({
             )}
           </aside>
 
-          <div className="overflow-x-auto pb-2">
+          <div className="overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {payload?.reviews.length ? (
-              <div className="flex items-stretch gap-4">
+              <div className="flex h-[340px] items-stretch gap-4">
                 {payload.reviews.map((review, index) => {
                   const stars = summarizeRating(review.rating);
 
                   return (
                     <article
                       key={`${review.authorName}-${review.time ?? index}`}
-                      className="flat-panel flex h-[340px] w-[300px] shrink-0 flex-col gap-4 p-5"
+                      className="flat-panel flex h-full w-[300px] shrink-0 flex-col gap-4 p-5"
                     >
                       <div className="flex items-center gap-3">
                         {review.profilePhotoUrl ? (
@@ -917,49 +914,7 @@ export default function GoogleTestimonials({
           </div>
         </div>
 
-        {payload?.photos.length ? (
-          <div className="space-y-3">
-            <h3 className="text-xl font-semibold">Customer Gallery</h3>
-            <div className="overflow-x-auto pb-2">
-              <div className="flex items-stretch gap-4">
-                {payload.photos.map((photo, index) => (
-                  <figure
-                    key={`${photo.imageUrl}-${index}`}
-                    className="flat-panel w-[280px] shrink-0 p-3"
-                  >
-                    <div className="relative h-[190px] w-full overflow-hidden rounded-xl bg-surface">
-                      {/* Google customer photos are external URLs. */}
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={photo.imageUrl}
-                        alt={`Customer photo ${index + 1}`}
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                    {photo.authorName ? (
-                      <figcaption className="mt-2 text-xs text-muted">
-                        {photo.authorUrl ? (
-                          <a
-                            href={photo.authorUrl}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            className="font-medium text-primary"
-                          >
-                            {photo.authorName}
-                          </a>
-                        ) : (
-                          photo.authorName
-                        )}
-                      </figcaption>
-                    ) : null}
-                  </figure>
-                ))}
-              </div>
-            </div>
-          </div>
-        ) : null}
+        <CustomerPhotoGallery photos={payload?.photos ?? []} />
       </Container>
     </section>
   );
