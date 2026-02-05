@@ -11,7 +11,11 @@ export type CustomerGalleryPhoto = {
 type CustomerPhotoGalleryProps = {
   photos: CustomerGalleryPhoto[];
   tagline?: string;
+  displayLimit?: number; // How many photos to randomly select and display
 };
+
+// Default number of photos to display (randomly selected from available)
+const DEFAULT_DISPLAY_LIMIT = 12;
 
 // Speed settings by screen size
 const SPEED_DESKTOP = 75; // pixels per second (screens >= 1024px)
@@ -30,12 +34,30 @@ function getSpeedForScreenWidth(width: number): number {
   return SPEED_MOBILE;
 }
 
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export default function CustomerPhotoGallery({
   photos,
   tagline = "We take pride in every tank we service.",
+  displayLimit = DEFAULT_DISPLAY_LIMIT,
 }: CustomerPhotoGalleryProps) {
   const railRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  // Shuffle and select a random subset of photos
+  // This runs when photos changes (typically just once when data loads)
+  const displayPhotos = useMemo(() => {
+    if (photos.length === 0) return [];
+    return shuffleArray(photos).slice(0, displayLimit);
+  }, [photos, displayLimit]);
 
   // Track base speed based on screen size
   const baseSpeedRef = useRef(
@@ -78,8 +100,8 @@ export default function CustomerPhotoGallery({
     if (activeIndex === null) {
       return null;
     }
-    return photos[activeIndex] ?? null;
-  }, [activeIndex, photos]);
+    return displayPhotos[activeIndex] ?? null;
+  }, [activeIndex, displayPhotos]);
 
   // Handler to trigger pause on user interaction
   const handleUserInteraction = useCallback(() => {
@@ -134,7 +156,7 @@ export default function CustomerPhotoGallery({
           if (previous === null) {
             return null;
           }
-          return previous === 0 ? photos.length - 1 : previous - 1;
+          return previous === 0 ? displayPhotos.length - 1 : previous - 1;
         });
         return;
       }
@@ -144,7 +166,7 @@ export default function CustomerPhotoGallery({
           if (previous === null) {
             return null;
           }
-          return previous === photos.length - 1 ? 0 : previous + 1;
+          return previous === displayPhotos.length - 1 ? 0 : previous + 1;
         });
       }
     };
@@ -153,7 +175,7 @@ export default function CustomerPhotoGallery({
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [activeIndex, photos.length]);
+  }, [activeIndex, displayPhotos.length]);
 
   // Set up interaction event listeners
   useEffect(() => {
@@ -209,7 +231,7 @@ export default function CustomerPhotoGallery({
 
   // Auto-scroll animation with pause and ramp-up
   useEffect(() => {
-    if (activeIndex !== null || photos.length < 2) {
+    if (activeIndex !== null || displayPhotos.length < 2) {
       return;
     }
 
@@ -286,13 +308,13 @@ export default function CustomerPhotoGallery({
     return () => {
       window.cancelAnimationFrame(frame);
     };
-  }, [activeIndex, photos.length]);
+  }, [activeIndex, displayPhotos.length]);
 
-  if (!photos.length) {
+  if (!displayPhotos.length) {
     return null;
   }
 
-  const carouselPhotos = [...photos, ...photos];
+  const carouselPhotos = [...displayPhotos, ...displayPhotos];
 
   return (
     <section className="overflow-hidden py-2">
@@ -325,7 +347,7 @@ export default function CustomerPhotoGallery({
                 marginLeft: index === 0 ? "0px" : "-34px",
                 zIndex: carouselPhotos.length - index,
               }}
-              onClick={() => setActiveIndex(index % photos.length)}
+              onClick={() => setActiveIndex(index % displayPhotos.length)}
               onMouseEnter={handleImageHoverStart}
               onMouseLeave={handleImageHoverEnd}
             >
@@ -362,7 +384,7 @@ export default function CustomerPhotoGallery({
             Close
           </button>
 
-          {photos.length > 1 ? (
+          {displayPhotos.length > 1 ? (
             <>
               <button
                 type="button"
@@ -371,7 +393,7 @@ export default function CustomerPhotoGallery({
                     previous === null
                       ? null
                       : previous === 0
-                        ? photos.length - 1
+                        ? displayPhotos.length - 1
                         : previous - 1,
                   )
                 }
@@ -385,7 +407,7 @@ export default function CustomerPhotoGallery({
                   setActiveIndex((previous) =>
                     previous === null
                       ? null
-                      : previous === photos.length - 1
+                      : previous === displayPhotos.length - 1
                         ? 0
                         : previous + 1,
                   )
@@ -422,7 +444,7 @@ export default function CustomerPhotoGallery({
                 </a>
               ) : null}
               <span>
-                {(activeIndex ?? 0) + 1}/{photos.length}
+                {(activeIndex ?? 0) + 1}/{displayPhotos.length}
               </span>
             </div>
           </div>

@@ -137,7 +137,7 @@ type GoogleMapsWindow = Window & {
 const CACHE_VERSION = 2;
 const CACHE_TTL_MS = 12 * 60 * 60 * 1000;
 const DEFAULT_REVIEW_LIMIT = 6;
-const DEFAULT_PHOTO_LIMIT = 12;
+const DEFAULT_PHOTO_LIMIT = 30; // Fetch more photos so gallery can randomly select a subset
 const PHOTO_MAX_WIDTH = 1280;
 const PHOTO_MAX_HEIGHT = 960;
 
