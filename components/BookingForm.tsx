@@ -78,7 +78,7 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
       {!isConfigured && (
         <div className="flat-alert bg-amber-50 px-4 py-3 text-sm text-amber-900">
           Add your Web3Forms access key to{" "}
-          <span className="font-semibold">form-access-key</span> in your{" "}
+          <span className="font-semibold">form_access_key</span> in your{" "}
           <span className="font-semibold">.env</span> file to enable
           submissions. You can also use{" "}
           <span className="font-semibold">NEXT_PUBLIC_WEB3FORMS_KEY</span>.

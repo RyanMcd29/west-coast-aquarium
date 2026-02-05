@@ -42,7 +42,7 @@ const breadcrumbJsonLd = {
 
 export default function BookingsPage() {
   const accessKey =
-    process.env["form-access-key"] ??
+    process.env["form_access_key"] ??
     process.env.NEXT_PUBLIC_WEB3FORMS_KEY ??
     "";
 

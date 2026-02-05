@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
+import GoogleTestimonials from "@/components/GoogleTestimonials";
 import HeroMedia from "@/components/HeroMedia";
 import HighlightedServices from "@/components/services/HighlightedServices";
 import { buildPageMetadata } from "@/lib/metadata";
 import { withBasePath } from "@/lib/paths";
 import { homeSeo } from "@/lib/page-seo/home";
+import { businessInfo } from "@/lib/seo";
 
 export const metadata = buildPageMetadata(homeSeo);
 
@@ -28,6 +30,13 @@ const maintenancePlans = [
 ];
 
 export default function Home() {
+  const mapsApiKey =
+    process.env["maps_api_key"] ?? process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
+  const googlePlaceId =
+    process.env["google_place_id"] ?? process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID ?? "";
+  const googlePlaceQuery =
+    process.env["google_place_query"] ?? `${businessInfo.name} Perth WA`;
+
   return (
     <div>
       <section className="relative overflow-hidden pb-16 pt-10 md:pb-24">
@@ -105,6 +114,12 @@ export default function Home() {
       </section>
 
       <HighlightedServices />
+
+      <GoogleTestimonials
+        apiKey={mapsApiKey}
+        placeId={googlePlaceId}
+        placeQuery={googlePlaceQuery}
+      />
 
       <section className="py-16">
         <Container className="space-y-8">
