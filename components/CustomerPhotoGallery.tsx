@@ -24,8 +24,7 @@ const SPEED_MOBILE = 35; // pixels per second (screens < 640px)
 
 const PAUSE_DURATION = 1500; // ms to pause after interaction
 const RAMP_UP_DURATION = 1200; // ms to ramp back up to full speed
-const HOVER_SPEED_RATIO = 0.2; // hover speed as ratio of current speed
-const HOVER_RAMP_DURATION = 400; // ms to slow down / speed up on hover
+const MAX_FRAME_DELTA_MS = 64; // clamp large frame gaps to prevent jumpy catch-up
 
 // Get speed based on screen width
 function getSpeedForScreenWidth(width: number): number {
@@ -34,13 +33,39 @@ function getSpeedForScreenWidth(width: number): number {
   return SPEED_MOBILE;
 }
 
-// Fisher-Yates shuffle algorithm
-function shuffleArray<T>(array: T[]): T[] {
+function easeOutCubic(value: number): number {
+  return 1 - Math.pow(1 - value, 3);
+}
+
+function hashString(value: string) {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function createDeterministicRandom(seed: number) {
+  let state = seed || 1;
+  return () => {
+    state = (state + 0x6d2b79f5) | 0;
+    let output = Math.imul(state ^ (state >>> 15), state | 1);
+    output ^= output + Math.imul(output ^ (output >>> 7), output | 61);
+    return ((output ^ (output >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// Fisher-Yates shuffle using a deterministic PRNG so SSR and hydration match.
+function shuffleArrayWithSeed<T>(array: T[], seed: number): T[] {
   const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+  const random = createDeterministicRandom(seed);
+
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
+
   return shuffled;
 }
 
@@ -50,14 +75,25 @@ export default function CustomerPhotoGallery({
   displayLimit = DEFAULT_DISPLAY_LIMIT,
 }: CustomerPhotoGalleryProps) {
   const railRef = useRef<HTMLDivElement | null>(null);
+  const loopWidthRef = useRef(0);
+  const scrollOffsetRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  // Shuffle and select a random subset of photos
-  // This runs when photos changes (typically just once when data loads)
+  // Keep "randomized" order stable across server and client for hydration safety.
   const displayPhotos = useMemo(() => {
     if (photos.length === 0) return [];
-    return shuffleArray(photos).slice(0, displayLimit);
+    const seedSource = `${displayLimit}:${photos
+      .map((photo) => photo.imageUrl.trim())
+      .join("|")}`;
+    const seed = hashString(seedSource);
+
+    return shuffleArrayWithSeed(photos, seed).slice(0, displayLimit);
   }, [photos, displayLimit]);
+
+  const carouselPhotos = useMemo(
+    () => [...displayPhotos, ...displayPhotos],
+    [displayPhotos],
+  );
 
   // Track base speed based on screen size
   const baseSpeedRef = useRef(
@@ -68,17 +104,35 @@ export default function CustomerPhotoGallery({
 
   // Track interaction state for pause/resume
   const interactionRef = useRef({
-    isInteracting: false,
+    isPointerDown: false,
     pauseEndTime: 0,
-    rampStartTime: 0,
   });
 
-  // Track hover state for gradual slowdown
-  const hoverRef = useRef({
-    isHovering: false,
-    transitionStartTime: 0,
-    startSpeed: SPEED_DESKTOP, // Will be updated dynamically when hover starts
-  });
+  const activePhoto = useMemo(() => {
+    if (activeIndex === null) {
+      return null;
+    }
+    return displayPhotos[activeIndex] ?? null;
+  }, [activeIndex, displayPhotos]);
+
+  const setPauseWindow = useCallback(() => {
+    const now = performance.now();
+    interactionRef.current.pauseEndTime = now + PAUSE_DURATION;
+  }, []);
+
+  const startPointerInteraction = useCallback(() => {
+    interactionRef.current.isPointerDown = true;
+    setPauseWindow();
+  }, [setPauseWindow]);
+
+  const endPointerInteraction = useCallback(() => {
+    if (!interactionRef.current.isPointerDown) {
+      return;
+    }
+
+    interactionRef.current.isPointerDown = false;
+    setPauseWindow();
+  }, [setPauseWindow]);
 
   // Update base speed on window resize
   useEffect(() => {
@@ -91,53 +145,6 @@ export default function CustomerPhotoGallery({
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Track if user is interacting for smooth scroll toggle
-  const [isUserScrolling, setIsUserScrolling] = useState(false);
-
-  const activePhoto = useMemo(() => {
-    if (activeIndex === null) {
-      return null;
-    }
-    return displayPhotos[activeIndex] ?? null;
-  }, [activeIndex, displayPhotos]);
-
-  // Handler to trigger pause on user interaction
-  const handleUserInteraction = useCallback(() => {
-    const now = performance.now();
-    interactionRef.current.isInteracting = true;
-    interactionRef.current.pauseEndTime = now + PAUSE_DURATION;
-    interactionRef.current.rampStartTime = now + PAUSE_DURATION;
-    setIsUserScrolling(true);
-  }, []);
-
-  // Handler when interaction ends (mouse up, touch end)
-  const handleInteractionEnd = useCallback(() => {
-    const now = performance.now();
-    interactionRef.current.isInteracting = false;
-    interactionRef.current.pauseEndTime = now + PAUSE_DURATION;
-    interactionRef.current.rampStartTime = now + PAUSE_DURATION;
-    // Disable smooth scroll after pause + ramp finishes
-    setTimeout(() => {
-      setIsUserScrolling(false);
-    }, PAUSE_DURATION + RAMP_UP_DURATION);
-  }, []);
-
-  // Handler for hover start - gradually slow down
-  const handleImageHoverStart = useCallback(() => {
-    const now = performance.now();
-    hoverRef.current.isHovering = true;
-    hoverRef.current.transitionStartTime = now;
-    hoverRef.current.startSpeed = baseSpeedRef.current;
-  }, []);
-
-  // Handler for hover end - gradually speed back up
-  const handleImageHoverEnd = useCallback(() => {
-    const now = performance.now();
-    hoverRef.current.isHovering = false;
-    hoverRef.current.transitionStartTime = now;
-    hoverRef.current.startSpeed = baseSpeedRef.current * HOVER_SPEED_RATIO;
   }, []);
 
   useEffect(() => {
@@ -184,50 +191,107 @@ export default function CustomerPhotoGallery({
       return;
     }
 
-    const onWheel = () => {
-      handleUserInteraction();
-      // Wheel events are instantaneous, so immediately end interaction
-      handleInteractionEnd();
-    };
-
-    const onMouseDown = () => {
-      handleUserInteraction();
-    };
-
-    const onMouseUp = () => {
-      handleInteractionEnd();
-    };
-
-    const onMouseLeave = () => {
-      if (interactionRef.current.isInteracting) {
-        handleInteractionEnd();
+    const syncOffsetFromRail = () => {
+      const loopWidth = loopWidthRef.current;
+      const rawLeft = rail.scrollLeft;
+      if (loopWidth > 0) {
+        const normalized = ((rawLeft % loopWidth) + loopWidth) % loopWidth;
+        scrollOffsetRef.current = normalized;
+      } else {
+        scrollOffsetRef.current = rawLeft;
       }
     };
 
-    const onTouchStart = () => {
-      handleUserInteraction();
+    const onWheel = () => {
+      setPauseWindow();
+      window.requestAnimationFrame(syncOffsetFromRail);
     };
 
-    const onTouchEnd = () => {
-      handleInteractionEnd();
+    const onPointerDown = (event: PointerEvent) => {
+      if (!event.isPrimary) {
+        return;
+      }
+
+      syncOffsetFromRail();
+      startPointerInteraction();
     };
+
+    const onPointerUp = (event: PointerEvent) => {
+      if (!event.isPrimary) {
+        return;
+      }
+
+      syncOffsetFromRail();
+      endPointerInteraction();
+    };
+
+    const onPointerLeave = (event: PointerEvent) => {
+      if (event.pointerType === "mouse") {
+        endPointerInteraction();
+      }
+    };
+
+    const onWindowBlur = () => {
+      syncOffsetFromRail();
+      interactionRef.current.isPointerDown = false;
+      setPauseWindow();
+    };
+
+    syncOffsetFromRail();
 
     rail.addEventListener("wheel", onWheel, { passive: true });
-    rail.addEventListener("mousedown", onMouseDown);
-    rail.addEventListener("mouseup", onMouseUp);
-    rail.addEventListener("mouseleave", onMouseLeave);
-    rail.addEventListener("touchstart", onTouchStart, { passive: true });
-    rail.addEventListener("touchend", onTouchEnd);
+    rail.addEventListener("pointerdown", onPointerDown, { passive: true });
+    rail.addEventListener("pointerleave", onPointerLeave);
+    window.addEventListener("pointerup", onPointerUp, { passive: true });
+    window.addEventListener("pointercancel", onPointerUp, { passive: true });
+    window.addEventListener("blur", onWindowBlur);
 
     return () => {
       rail.removeEventListener("wheel", onWheel);
-      rail.removeEventListener("mousedown", onMouseDown);
-      rail.removeEventListener("mouseup", onMouseUp);
-      rail.removeEventListener("mouseleave", onMouseLeave);
-      rail.removeEventListener("touchstart", onTouchStart);
-      rail.removeEventListener("touchend", onTouchEnd);
+      rail.removeEventListener("pointerdown", onPointerDown);
+      rail.removeEventListener("pointerleave", onPointerLeave);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+      window.removeEventListener("blur", onWindowBlur);
     };
-  }, [handleUserInteraction, handleInteractionEnd]);
+  }, [endPointerInteraction, setPauseWindow, startPointerInteraction]);
+
+  // Measure the duplicated track width once and keep it updated on resize/content changes.
+  useEffect(() => {
+    const rail = railRef.current;
+    const track = rail?.firstElementChild as HTMLDivElement | null;
+    if (!rail || !track) {
+      return;
+    }
+
+    const updateLoopWidth = () => {
+      const nextWidth = track.scrollWidth / 2;
+      loopWidthRef.current = nextWidth;
+      if (nextWidth > 0) {
+        scrollOffsetRef.current =
+          ((scrollOffsetRef.current % nextWidth) + nextWidth) % nextWidth;
+      } else {
+        scrollOffsetRef.current = 0;
+      }
+    };
+
+    updateLoopWidth();
+
+    if (typeof ResizeObserver === "undefined") {
+      window.addEventListener("resize", updateLoopWidth);
+      return () => {
+        window.removeEventListener("resize", updateLoopWidth);
+      };
+    }
+
+    const resizeObserver = new ResizeObserver(updateLoopWidth);
+    resizeObserver.observe(track);
+    resizeObserver.observe(rail);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [displayPhotos.length]);
 
   // Auto-scroll animation with pause and ramp-up
   useEffect(() => {
@@ -244,61 +308,37 @@ export default function CustomerPhotoGallery({
     let lastTime = performance.now();
 
     const step = (now: number) => {
-      const delta = now - lastTime;
+      const delta = Math.min(Math.max(now - lastTime, 0), MAX_FRAME_DELTA_MS);
       lastTime = now;
 
-      const { isInteracting, pauseEndTime, rampStartTime } =
-        interactionRef.current;
-      const { isHovering, transitionStartTime, startSpeed } = hoverRef.current;
+      const { isPointerDown, pauseEndTime } = interactionRef.current;
       const baseSpeed = baseSpeedRef.current;
-      const hoverSpeed = baseSpeed * HOVER_SPEED_RATIO;
 
       // Calculate current speed based on interaction state
       let currentSpeed = baseSpeed;
 
-      if (isInteracting) {
-        // Actively interacting - no auto-scroll
+      if (isPointerDown) {
+        // User is actively dragging/pressing - no auto-scroll
         currentSpeed = 0;
       } else if (now < pauseEndTime) {
         // In pause period after interaction ended
         currentSpeed = 0;
-      } else if (now < rampStartTime + RAMP_UP_DURATION) {
+      } else if (now < pauseEndTime + RAMP_UP_DURATION) {
         // Ramping back up to full speed after interaction
-        const rampProgress = (now - rampStartTime) / RAMP_UP_DURATION;
-        // Use ease-out curve for smooth acceleration
-        const eased = 1 - Math.pow(1 - rampProgress, 3);
-        currentSpeed = baseSpeed * eased;
+        const rampProgress = Math.min((now - pauseEndTime) / RAMP_UP_DURATION, 1);
+        currentSpeed = baseSpeed * easeOutCubic(rampProgress);
       }
 
-      // Apply hover speed modulation (only if not in interaction pause)
+      // Apply scroll and loop when crossing the duplicated boundary.
       if (currentSpeed > 0) {
-        const hoverElapsed = now - transitionStartTime;
-        const hoverProgress = Math.min(hoverElapsed / HOVER_RAMP_DURATION, 1);
-        // Use ease-in-out for smooth hover transitions
-        const hoverEased =
-          hoverProgress < 0.5
-            ? 2 * hoverProgress * hoverProgress
-            : 1 - Math.pow(-2 * hoverProgress + 2, 2) / 2;
-
-        if (isHovering) {
-          // Transitioning from startSpeed down to hover speed
-          currentSpeed = startSpeed - (startSpeed - hoverSpeed) * hoverEased;
-        } else if (hoverElapsed < HOVER_RAMP_DURATION) {
-          // Transitioning from startSpeed back up to current target speed
-          const targetSpeed = currentSpeed;
-          currentSpeed = startSpeed + (targetSpeed - startSpeed) * hoverEased;
+        const loopWidth = loopWidthRef.current;
+        if (loopWidth > 0) {
+          scrollOffsetRef.current += (currentSpeed * delta) / 1000;
+          if (scrollOffsetRef.current >= loopWidth) {
+            scrollOffsetRef.current %= loopWidth;
+          }
+          rail.scrollLeft = scrollOffsetRef.current;
         }
-      }
-
-      // Apply scroll
-      if (currentSpeed > 0) {
-        rail.scrollLeft += (currentSpeed * delta) / 1000;
-      }
-
-      // Handle loop - reset to start when past halfway
-      const loopWidth = rail.scrollWidth / 2;
-      if (rail.scrollLeft >= loopWidth) {
-        rail.scrollLeft -= loopWidth;
       }
 
       frame = window.requestAnimationFrame(step);
@@ -314,8 +354,6 @@ export default function CustomerPhotoGallery({
     return null;
   }
 
-  const carouselPhotos = [...displayPhotos, ...displayPhotos];
-
   return (
     <section className="overflow-hidden py-2">
       <div className="space-y-2">
@@ -325,45 +363,47 @@ export default function CustomerPhotoGallery({
         <h3 className="text-2xl font-semibold">{tagline}</h3>
       </div>
 
-      <div className="relative left-1/2 mt-5 h-[430px] w-screen -translate-x-1/2 overflow-hidden sm:left-0 sm:w-full sm:translate-x-0 sm:[mask-image:linear-gradient(to_right,transparent,black_56px,black_calc(100%-56px),transparent)]">
+      <div className="relative left-1/2 mt-5 h-[380px] w-screen -translate-x-1/2 overflow-hidden sm:left-0 sm:h-[410px] sm:w-full sm:translate-x-0 lg:h-[430px] sm:[mask-image:linear-gradient(to_right,transparent,black_56px,black_calc(100%-56px),transparent)]">
         <div
           ref={railRef}
-          className={`h-full overflow-x-auto overflow-y-hidden [scrollbar-width:none] [will-change:scroll-position] [&::-webkit-scrollbar]:hidden ${isUserScrolling ? "scroll-smooth" : ""}`}
+          className="h-full overflow-x-auto overflow-y-hidden [scrollbar-width:none] [will-change:scroll-position] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
         >
           <div className="flex h-full transform-gpu items-start px-2 py-2">
             {carouselPhotos.map((photo, index) => {
               const isHigh = index % 2 === 0;
 
               return (
-            <button
-              type="button"
-              key={`${photo.imageUrl}-${index}`}
-              aria-label={`Open customer tank photo ${index + 1}`}
-              className="group relative shrink-0 overflow-hidden rounded-2xl text-left shadow-md transition hover:-translate-y-1 hover:shadow-xl"
-              style={{
-                width: "300px",
-                height: "300px",
-                marginTop: isHigh ? "18px" : "96px",
-                marginLeft: index === 0 ? "0px" : "-34px",
-                zIndex: carouselPhotos.length - index,
-              }}
-              onClick={() => setActiveIndex(index % displayPhotos.length)}
-              onMouseEnter={handleImageHoverStart}
-              onMouseLeave={handleImageHoverEnd}
-            >
-              <div className="relative h-full w-full overflow-hidden">
-                {/* Google customer photos are external URLs. */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={photo.imageUrl}
-                  alt={`Customer tank photo ${index + 1}`}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-              </div>
-            </button>
+                <button
+                  type="button"
+                  key={`${photo.imageUrl}-${index}`}
+                  aria-label={`Open customer tank photo ${index + 1}`}
+                  className="group relative shrink-0 overflow-hidden rounded-2xl text-left shadow-md transition hover:-translate-y-1 hover:shadow-xl"
+                  style={{
+                    width: "clamp(190px, 68vw, 300px)",
+                    height: "clamp(190px, 68vw, 300px)",
+                    marginTop: isHigh
+                      ? "clamp(12px, 3vw, 18px)"
+                      : "clamp(74px, 16vw, 96px)",
+                    marginLeft: index === 0 ? "0px" : "clamp(-34px, -6vw, -20px)",
+                    zIndex: carouselPhotos.length - index,
+                  }}
+                  onClick={() => setActiveIndex(index % displayPhotos.length)}
+                >
+                  <div className="relative h-full w-full overflow-hidden">
+                    {/* Google customer photos are external URLs. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={photo.imageUrl}
+                      alt={`Customer tank photo ${index + 1}`}
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                      referrerPolicy="no-referrer"
+                      draggable={false}
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                  </div>
+                </button>
               );
             })}
           </div>

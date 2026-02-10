@@ -52,7 +52,6 @@ export default function ContactPage() {
     <div>
       <SeoJsonLd data={breadcrumbJsonLd} id="contact-breadcrumbs-jsonld" />
       <PageHero
-        eyebrow="Contact"
         title="Let’s keep your aquarium running perfectly."
         description="Reach out for installations, maintenance visits, or equipment support. We’ll reply promptly with next steps."
         breadcrumbs={<Breadcrumbs items={breadcrumbItems} />}
@@ -86,7 +85,7 @@ export default function ContactPage() {
           </div>
           <div className="flat-panel p-6">
             <h3 className="text-lg font-semibold">Operating style</h3>
-            <p className="mt-3 text-sm text-muted">
+            <p className="mt-3 text-sm leading-relaxed text-muted">
               We focus on clear communication, safe handling of livestock, and
               tidy finishes. If you’re preparing for a move, new installation,
               or ongoing care, include a few details so we can guide you
@@ -94,7 +93,7 @@ export default function ContactPage() {
             </p>
             <div className="flat-panel-elevated mt-6 px-4 py-3 text-sm text-muted">
               <p className="font-semibold text-foreground">Tip</p>
-              <p className="mt-1">
+              <p className="mt-1 leading-relaxed">
                 Sharing your tank size, livestock type, and current equipment
                 helps us prepare the right service plan.
               </p>

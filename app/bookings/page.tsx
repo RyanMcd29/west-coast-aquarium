@@ -50,7 +50,6 @@ export default function BookingsPage() {
     <div>
       <SeoJsonLd data={breadcrumbJsonLd} id="bookings-breadcrumbs-jsonld" />
       <PageHero
-        eyebrow="Bookings"
         title="Request a consultation"
         description="Tell us about your aquarium and we’ll prepare a tailored service plan. We work with residential and commercial tanks across Perth metro and surrounds."
         imageSrc={heroImageSrc}
@@ -77,14 +76,14 @@ export default function BookingsPage() {
             </div>
             <div className="flat-panel p-6">
               <h3 className="text-lg font-semibold">Service area</h3>
-              <p className="mt-3 text-sm text-muted">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 Perth metro and surrounds. If you’re outside the metro area,
                 include your suburb and we’ll confirm travel options.
               </p>
             </div>
             <div className="flat-panel p-6">
               <h3 className="text-lg font-semibold">Preferred contact</h3>
-              <p className="mt-3 text-sm text-muted">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 We’ll respond by phone or email. If you have a preferred time
                 window, pop it in the form and we’ll do our best.
               </p>

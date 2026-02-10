@@ -89,7 +89,7 @@ export default function HeaderClient({
   return (
     <>
       <header className="relative z-[1000] border-b border-outline/70 bg-surface/80 backdrop-blur">
-        <Container className="flex items-center justify-between py-4">
+        <Container className="flex items-center justify-between py-3.5">
           <Logo />
           <div className="flex items-center gap-4">
             <nav className="hidden items-center gap-8 text-sm font-medium text-foreground/80 md:flex">
@@ -98,6 +98,7 @@ export default function HeaderClient({
                   type="button"
                   aria-haspopup="menu"
                   aria-expanded={isServicesOpen}
+                  aria-controls="desktop-services-menu"
                   onClick={() => setIsServicesOpen((prev) => !prev)}
                   className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
                 >
@@ -111,6 +112,7 @@ export default function HeaderClient({
                   </span>
                 </button>
                 <div
+                  id="desktop-services-menu"
                   role="menu"
                   aria-hidden={!isServicesOpen}
                   className={`absolute left-0 top-full z-[1100] mt-3 w-72 rounded-2xl border border-outline/70 bg-surface/95 p-3 text-sm text-foreground shadow-xl backdrop-blur transition ${
@@ -144,6 +146,7 @@ export default function HeaderClient({
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={closeServicesMenu}
                   className="transition-colors hover:text-foreground"
                 >
                   {item.label}
@@ -151,7 +154,8 @@ export default function HeaderClient({
               ))}
               <Link
                 href="/bookings"
-                className="rounded-full bg-primary px-4 py-2 text-white shadow-sm transition hover:bg-primary/90"
+                onClick={closeServicesMenu}
+                className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 py-2 text-white shadow-sm transition hover:bg-primary/90"
               >
                 Request a consult
               </Link>
@@ -161,8 +165,9 @@ export default function HeaderClient({
               aria-label={isOpen ? "Close menu" : "Open menu"}
               aria-controls="mobile-nav"
               aria-expanded={isOpen}
+              aria-haspopup="dialog"
               onClick={handleMobileToggle}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-outline/70 bg-surface text-foreground transition hover:border-outline md:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-outline/70 bg-surface text-foreground transition hover:border-outline md:hidden"
             >
               <span className="sr-only">Toggle menu</span>
               <span className="relative h-4 w-5">
@@ -198,21 +203,22 @@ export default function HeaderClient({
       <aside
         id="mobile-nav"
         role="dialog"
-        aria-modal={isOpen}
+        aria-modal={isOpen ? true : undefined}
         aria-hidden={!isOpen}
-        className={`fixed right-0 top-0 z-[99999] flex h-full w-72 max-w-[80vw] flex-col gap-6 border-l border-outline/70 bg-surface px-6 py-6 shadow-2xl transition-transform duration-300 md:hidden ${
+        inert={!isOpen}
+        className={`fixed right-0 top-0 z-[99999] flex h-full w-80 max-w-[90vw] flex-col gap-5 border-l border-outline/70 bg-surface px-5 py-5 shadow-2xl transition-transform duration-300 md:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
           Menu
         </div>
-        <nav className="flex flex-col gap-4 text-base font-medium text-foreground">
+        <nav className="flex flex-col gap-2 text-base font-medium text-foreground">
           <div>
             <button
               type="button"
               onClick={() => setIsMobileServicesOpen((prev) => !prev)}
-              className="flex w-full items-center justify-between transition-colors hover:text-foreground/70"
+              className="flex min-h-11 w-full items-center justify-between rounded-xl px-2 py-2 transition-colors hover:bg-surface-elevated hover:text-foreground/70"
               aria-expanded={isMobileServicesOpen}
             >
               Services
@@ -244,7 +250,7 @@ export default function HeaderClient({
                 <Link
                   href="/services"
                   onClick={closeMobileNav}
-                  className="pl-3 transition-colors hover:text-foreground"
+                  className="rounded-xl py-2 pl-3 transition-colors hover:bg-surface-elevated hover:text-foreground"
                 >
                   All services
                 </Link>
@@ -253,7 +259,7 @@ export default function HeaderClient({
                     key={item.href}
                     href={item.href}
                     onClick={closeMobileNav}
-                    className="pl-3 transition-colors hover:text-foreground"
+                    className="rounded-xl py-2 pl-3 transition-colors hover:bg-surface-elevated hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -266,7 +272,7 @@ export default function HeaderClient({
               key={item.href}
               href={item.href}
               onClick={closeMobileNav}
-              className="transition-colors hover:text-foreground/70"
+              className="inline-flex min-h-11 items-center rounded-xl px-2 py-2 transition-colors hover:bg-surface-elevated hover:text-foreground/70"
             >
               {item.label}
             </Link>
@@ -275,7 +281,7 @@ export default function HeaderClient({
         <Link
           href="/bookings"
           onClick={closeMobileNav}
-          className="mt-auto inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"
+          className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"
         >
           Request a consult
         </Link>

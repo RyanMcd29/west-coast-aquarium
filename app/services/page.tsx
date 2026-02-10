@@ -16,7 +16,6 @@ const heroImageAlt = "Modern reef aquarium installation with lighting";
 
 export const metadata = buildPageMetadata(servicesSeo);
 
-
 const servicesJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -99,7 +98,7 @@ export default function ServicesPage() {
             <h2 className="text-3xl font-semibold">
               Aquarium maintenance built around your schedule
             </h2>
-            <p className="max-w-2xl text-muted">
+            <p className="max-w-2xl leading-relaxed text-muted">
               Weekly, fortnightly, or monthly plans help keep parameters stable,
               presentation sharp, and your aquarium running smoothly.
             </p>
@@ -119,7 +118,7 @@ export default function ServicesPage() {
 
       <section className="bg-surface-elevated py-16">
         <Container className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="relative h-72 overflow-hidden">
+          <div className="relative h-72 overflow-hidden rounded-3xl border border-outline/70 shadow-lg shadow-primary/10 md:h-80">
             <Image
               src={withBasePath("/images/reef-aquarium-sump-cabinet.webp")}
               alt="Aquarium filtration cabinet and sump equipment"
@@ -130,9 +129,9 @@ export default function ServicesPage() {
           </div>
           <div className="space-y-5">
             <h2 className="text-3xl font-semibold">
-              Maintenance built around your schedule
+              Clear reporting with every service visit
             </h2>
-            <p className="text-muted">
+            <p className="leading-relaxed text-muted">
               We provide flexible service windows across Perth metro, with clear
               communication and follow-up notes so you always know what was done
               and what to expect next. Whether you need weekly aquarium
@@ -141,7 +140,7 @@ export default function ServicesPage() {
             </p>
             <Link
               href="/bookings"
-              className="ocean-gradient inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110"
+              className="ocean-gradient inline-flex min-h-11 w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110 sm:w-auto"
             >
               Request a consultation
             </Link>
@@ -163,7 +162,7 @@ export default function ServicesPage() {
                 <p className="text-sm font-semibold text-foreground">
                   {faq.name}
                 </p>
-                <p className="mt-2 text-sm text-muted">
+                <p className="mt-2 text-sm leading-relaxed text-muted">
                   {faq.acceptedAnswer.text}
                 </p>
               </div>

@@ -36,7 +36,7 @@ export default function HighlightedServices({
             </p>
           ) : null}
           <h2 className="text-3xl font-semibold">{title}</h2>
-          <p className="max-w-3xl text-muted">{description}</p>
+          <p className="max-w-3xl leading-relaxed text-muted">{description}</p>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <MaintenanceHighlight />
@@ -52,7 +52,7 @@ export default function HighlightedServices({
           <div>
             <Link
               href={ctaHref}
-              className="inline-flex items-center justify-center rounded-full border border-outline/80 bg-surface/90 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-outline/80 bg-surface/90 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md sm:w-auto"
             >
               {ctaLabel}
             </Link>

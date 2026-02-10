@@ -5,7 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
 import SeoJsonLd from "@/components/SeoJsonLd";
-import { businessInfo, siteUrl } from "@/lib/seo";
+import { siteUrl } from "@/lib/seo";
 import {
   buildServiceJsonLd,
   getServicePage,
@@ -375,7 +375,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
               How it works
             </p>
             <h2 className="text-3xl font-semibold">A calm, proven process</h2>
-            <p className="text-muted">
+            <p className="max-w-2xl leading-relaxed text-muted">
               Every visit follows a structured workflow that prioritises
               livestock safety, clean presentation, and stable parameters.
             </p>
@@ -386,7 +386,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 <p className="text-sm font-semibold text-foreground">
                   {step.title}
                 </p>
-                <p className="mt-2 text-xs text-muted">{step.detail}</p>
+                <p className="mt-2 text-xs leading-relaxed text-muted">{step.detail}</p>
               </div>
             ))}
           </div>
@@ -426,20 +426,20 @@ export default async function ServiceDetailPage({ params }: PageProps) {
               <h3 className="text-lg font-semibold">
                 Ready to schedule {page.title.toLowerCase()}?
               </h3>
-              <p className="mt-3 text-sm text-muted">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 Tell us about your tank size, livestock, and goals. We’ll share
                 next steps and a tailored service plan.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   href="/bookings"
-                  className="ocean-gradient inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110"
+                  className="ocean-gradient inline-flex min-h-11 w-full items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110 sm:w-auto"
                 >
                   Request a consultation
                 </Link>
                 <a
                   href="tel:0466961437"
-                  className="inline-flex items-center justify-center rounded-full border border-outline/80 bg-surface px-5 py-2.5 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+                  className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-outline/80 bg-surface px-5 py-2.5 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md sm:w-auto"
                 >
                   Call now
                 </a>
@@ -447,7 +447,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             </div>
             <div className="flat-panel p-6">
               <h3 className="text-lg font-semibold">Service coverage</h3>
-              <p className="mt-3 text-sm text-muted">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 Based in Perth, supporting homes and businesses across the
                 metro area. Flexible scheduling for commercial sites.
               </p>

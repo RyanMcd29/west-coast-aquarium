@@ -22,7 +22,7 @@ export default function PageHero({
   const resolvedImageSrc = imageSrc ? withBasePath(imageSrc) : undefined;
 
   return (
-    <section className="bg-surface-elevated py-16">
+    <section className="bg-surface-elevated py-12 sm:py-16">
       <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="space-y-4">
           {breadcrumbs ? <div>{breadcrumbs}</div> : null}
@@ -31,11 +31,15 @@ export default function PageHero({
               {eyebrow}
             </p>
           )}
-          <h1 className="text-4xl font-semibold leading-tight">{title}</h1>
-          <p className="text-lg text-muted">{description}</p>
+          <h1 className="max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+            {title}
+          </h1>
+          <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+            {description}
+          </p>
         </div>
         {resolvedImageSrc ? (
-          <div className="relative h-64 overflow-hidden">
+          <div className="relative h-56 overflow-hidden rounded-3xl border border-outline/70 shadow-lg shadow-primary/10 sm:h-64 md:h-72">
             <Image
               src={resolvedImageSrc}
               alt={imageAlt}

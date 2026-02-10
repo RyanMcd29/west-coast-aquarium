@@ -221,6 +221,27 @@ const mapRegions: ServiceRegion[] = [
   },
 ];
 
+const coverageHighlights = [
+  {
+    label: "Coverage",
+    value: "Perth metro",
+  },
+  {
+    label: "Range",
+    value: "Two Rocks to Mandurah",
+  },
+  {
+    label: "Travel",
+    value: "Suburb-confirmed visits",
+  },
+];
+
+const serviceAvailabilityPoints = [
+  "Scheduled maintenance and fish tank cleaning",
+  "Aquarium relocation and new setup support",
+  "Urgent issue support when scheduling allows",
+];
+
 const breadcrumbItems = [
   { label: "Home", href: "/" },
   { label: "Service area" },
@@ -252,7 +273,6 @@ export default function PerthAquariumServicesPage() {
         id="service-area-breadcrumbs-jsonld"
       />
       <PageHero
-        // eyebrow="Service area"
         title="Perth aquarium services across the metro area"
         description="We provide aquarium maintenance, fish tank cleaning, relocation, and installation across Perth metro and surrounds. If you’re outside these suburbs, let us know your location and we’ll confirm travel options."
         imageSrc={heroImageSrc}
@@ -260,68 +280,117 @@ export default function PerthAquariumServicesPage() {
         breadcrumbs={<Breadcrumbs items={breadcrumbItems} />}
       />
 
-      <section className="py-16">
-        <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+      <section className="py-14 sm:py-16">
+        <Container className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
           <div className="space-y-6">
-            <h2 className="text-3xl font-semibold">Where we work</h2>
-            <p className="text-muted">
-              Perth metro aquarium servicing with a local aquarium technician
-              who confirms travel options by suburb, tank size, and service
-              type.
-            </p>
-            <p className="text-muted">
-              {businessInfo.name} focuses on {businessInfo.areaServed}. We
-              prioritise responsive scheduling and clear communication. Travel
-              is confirmed based on your suburb and service type.
-            </p>
-            <div className="grid gap-4">
+            <div className="flat-panel rounded-3xl border border-outline/70 p-6 sm:p-7">
+              <h2 className="text-3xl font-semibold">Where we work</h2>
+              <p className="mt-4 leading-relaxed text-muted">
+                Perth metro aquarium servicing with a local aquarium technician
+                who confirms travel options by suburb, tank size, and service
+                type.
+              </p>
+              <p className="mt-3 leading-relaxed text-muted">
+                {businessInfo.name} focuses on {businessInfo.areaServed}. We
+                prioritise responsive scheduling and clear communication. Travel
+                is confirmed based on your suburb and service type.
+              </p>
+              <dl className="mt-6 grid gap-3 sm:grid-cols-3">
+                {coverageHighlights.map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-2xl border border-outline/70 bg-surface px-4 py-3"
+                  >
+                    <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/80">
+                      {item.label}
+                    </dt>
+                    <dd className="mt-1 text-sm font-semibold text-foreground">
+                      {item.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
               {displayRegions.map((region) => (
-                <div key={region.title} className="flat-panel p-5">
+                <article
+                  key={region.id}
+                  className="flat-panel rounded-2xl border border-outline/70 bg-surface/95 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10"
+                >
                   <h3 className="text-lg font-semibold">{region.title}</h3>
-                  <p className="mt-3 text-sm text-muted">
-                    {region.suburbs.join(", ")}
-                  </p>
-                </div>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {region.suburbs.map((suburb) => (
+                      <li
+                        key={`${region.id}-${suburb}`}
+                        className="rounded-full border border-outline/70 bg-surface-elevated px-3 py-1 text-xs font-medium text-muted"
+                      >
+                        {suburb}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
               ))}
             </div>
           </div>
-          <div className="space-y-6">
-            <div className="flat-panel p-6">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="text-lg font-semibold">Perth service map</h3>
-                <span className="text-xs text-muted">
-                  Full metro coverage shown
-                </span>
+
+          <div className="space-y-5 lg:sticky lg:top-24">
+            <div className="flat-panel overflow-hidden rounded-3xl border border-outline/70">
+              <div className="ocean-gradient px-6 py-5 text-white">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 className="text-lg font-semibold">Perth service map</h3>
+                  <span className="rounded-full bg-white/20 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/90">
+                    Metro coverage
+                  </span>
+                </div>
+                <p className="mt-2 text-sm text-white/90">
+                  Service area coverage across the Perth metro corridor.
+                </p>
               </div>
-              <div className="mt-4 overflow-hidden rounded-2xl border border-outline/70 bg-surface">
-                <PerthServiceMap regions={mapRegions} />
+              <div className="bg-surface px-5 pb-5 pt-4">
+                <div className="overflow-hidden rounded-2xl border border-outline/70 bg-surface">
+                  <PerthServiceMap regions={mapRegions} />
+                </div>
+                <div className="mt-3 grid gap-2 text-xs text-muted sm:grid-cols-2">
+                  <p className="rounded-lg border border-outline/60 bg-surface-elevated px-3 py-2">
+                    Coastal service range from Two Rocks to Mandurah.
+                  </p>
+                  <p className="rounded-lg border border-outline/60 bg-surface-elevated px-3 py-2">
+                    Eastern boundary follows metro foothills and surrounds.
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="flat-panel p-6">
+
+            <div className="flat-panel rounded-3xl border border-outline/70 p-6">
               <h3 className="text-lg font-semibold">Service availability</h3>
-              <p className="mt-3 text-sm text-muted">
-                We book scheduled maintenance, cleaning, relocation, and
-                installation visits. Priority support is available for urgent
-                issues where possible.
-              </p>
+              <ul className="mt-4 space-y-3 text-sm text-muted">
+                {serviceAvailabilityPoints.map((point) => (
+                  <li key={point} className="flex gap-3">
+                    <span className="mt-1.5 h-2 w-2 rounded-full bg-primary" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   href="/bookings"
-                  className="ocean-gradient inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110"
+                  className="ocean-gradient inline-flex min-h-11 w-full items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110 sm:w-auto"
                 >
                   Request a consultation
                 </Link>
                 <a
                   href="tel:0466961437"
-                  className="inline-flex items-center justify-center rounded-full border border-outline/80 bg-surface px-5 py-2.5 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+                  className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-outline/80 bg-surface px-5 py-2.5 text-sm font-semibold text-foreground shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md sm:w-auto"
                 >
                   Call us
                 </a>
               </div>
             </div>
-            <div className="flat-panel p-6">
+
+            <div className="flat-panel-elevated rounded-3xl border border-outline/70 p-6">
               <h3 className="text-lg font-semibold">Not sure about coverage?</h3>
-              <p className="mt-3 text-sm text-muted">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 Share your suburb, tank size, and preferred timing, and we’ll
                 confirm availability and next steps.
               </p>

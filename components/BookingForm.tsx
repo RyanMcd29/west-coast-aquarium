@@ -22,10 +22,10 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
   const isConfigured = Boolean(accessKey);
 
   const fieldClassName =
-    "flat-field w-full px-3 py-2 text-sm text-foreground placeholder:text-muted/70 transition-colors focus:outline-none";
+    "flat-field w-full px-3 py-2.5 text-sm text-foreground placeholder:text-muted/70 transition-colors focus:outline-none";
 
   const optionCardClassName =
-    "flat-option flex items-start gap-3 px-3 py-2 text-sm text-muted transition-colors";
+    "flat-option flex items-start gap-3 px-3 py-2.5 text-sm text-muted transition-colors";
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -59,7 +59,7 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
           data.message || "Something went wrong. Please try again."
         );
       }
-    } catch (error) {
+    } catch {
       setStatus("error");
       setErrorMessage("Unable to submit the form. Please try again.");
     }
@@ -86,13 +86,19 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
       )}
 
       {status === "success" && (
-        <div className="flat-alert bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+        <div
+          aria-live="polite"
+          className="flat-alert bg-emerald-50 px-4 py-3 text-sm text-emerald-900"
+        >
           Thanks for the details. We’ll be in touch shortly.
         </div>
       )}
 
       {status === "error" && (
-        <div className="flat-alert bg-rose-50 px-4 py-3 text-sm text-rose-900">
+        <div
+          aria-live="polite"
+          className="flat-alert bg-rose-50 px-4 py-3 text-sm text-rose-900"
+        >
           {errorMessage}
         </div>
       )}
@@ -105,6 +111,7 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
             name="name"
             className={fieldClassName}
             placeholder="Your name"
+            autoComplete="name"
           />
         </label>
         <label className="space-y-2 text-sm font-medium">
@@ -115,6 +122,7 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
             name="email"
             className={fieldClassName}
             placeholder="you@example.com"
+            autoComplete="email"
           />
         </label>
         <label className="space-y-2 text-sm font-medium">
@@ -125,6 +133,7 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
             name="phone"
             className={fieldClassName}
             placeholder="04xx xxx xxx"
+            autoComplete="tel"
           />
         </label>
         <label className="space-y-2 text-sm font-medium">
@@ -134,6 +143,7 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
             name="suburb"
             className={fieldClassName}
             placeholder="Perth suburb"
+            autoComplete="address-level2"
           />
         </label>
       </div>
@@ -161,6 +171,7 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
             name="tank_volume"
             className={fieldClassName}
             placeholder="e.g. 300"
+            inputMode="numeric"
           />
         </label>
       </div>
@@ -177,7 +188,7 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
                 type="checkbox"
                 name="services"
                 value={option}
-                className="mt-1 accent-primary"
+                className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
               />
               <span>{option}</span>
             </label>
@@ -209,7 +220,7 @@ export default function BookingForm({ accessKey }: BookingFormProps) {
       <button
         type="submit"
         disabled={!isConfigured || status === "submitting"}
-        className="ocean-gradient inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+        className="ocean-gradient inline-flex min-h-11 w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "submitting" ? "Sending..." : "Submit request"}
       </button>

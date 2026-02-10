@@ -134,12 +134,35 @@ type GoogleMapsWindow = Window & {
   };
 };
 
+type NavigatorWithConnection = Navigator & {
+  connection?: {
+    saveData?: boolean;
+    effectiveType?: string;
+    downlink?: number;
+  };
+};
+
 const CACHE_VERSION = 2;
 const CACHE_TTL_MS = 12 * 60 * 60 * 1000;
 const DEFAULT_REVIEW_LIMIT = 6;
-const DEFAULT_PHOTO_LIMIT = 30; // Fetch more photos so gallery can randomly select a subset
+const DEFAULT_PHOTO_LIMIT = 60; // Keep a larger pool so each load can rotate gallery picks
+const PHOTO_WARM_LIMIT = 8;
 const PHOTO_MAX_WIDTH = 1280;
 const PHOTO_MAX_HEIGHT = 960;
+const LOCAL_GALLERY_PHOTO_PATHS = [
+  "/images/PHOTO-2023-12-21-10-43-07.jpg",
+  "/images/IMG_4516.JPG",
+  "/images/IMG_5599.JPG",
+  "/images/IMG_6521.JPG",
+  "/images/IMG_6540.JPG",
+  "/images/living-room-reef-aquarium.webp",
+  "/images/reef-aquarium-black-cabinet.webp",
+  "/images/reef-aquarium-coral-closeup.webp",
+  "/images/reef-aquarium-sump-cabinet.webp",
+  "/images/reef-aquarium-sump-maintenance.webp",
+  "/images/reef-aquarium-white-cabinet.webp",
+  "/images/sump-filtration-equipment.webp",
+] as const;
 
 let googleMapsScriptPromise: Promise<void> | null = null;
 
@@ -171,6 +194,34 @@ function summarizeRating(rating: number) {
   const rounded = Math.max(0, Math.min(5, Math.round(rating)));
   return { rounded, empty: 5 - rounded };
 }
+
+function dedupePhotosByUrl(photos: CustomerGalleryPhoto[]) {
+  const uniquePhotos: CustomerGalleryPhoto[] = [];
+  const seenUrls = new Set<string>();
+
+  for (const photo of photos) {
+    const normalizedUrl = photo.imageUrl.trim();
+    if (!normalizedUrl || seenUrls.has(normalizedUrl)) {
+      continue;
+    }
+
+    seenUrls.add(normalizedUrl);
+    uniquePhotos.push({
+      ...photo,
+      imageUrl: normalizedUrl,
+    });
+  }
+
+  return uniquePhotos;
+}
+
+const LOCAL_GALLERY_PHOTOS: CustomerGalleryPhoto[] = LOCAL_GALLERY_PHOTO_PATHS.map(
+  (path) => ({
+    imageUrl: withBasePath(path),
+    authorName: null,
+    authorUrl: null,
+  }),
+);
 
 function getCacheValue(cacheKey: string) {
   if (typeof window === "undefined") {
@@ -214,6 +265,28 @@ function setCacheValue(cacheKey: string, payload: TestimonialsPayload) {
   }
 }
 
+function shouldWarmPhotoCache() {
+  if (typeof navigator === "undefined") {
+    return false;
+  }
+
+  const connection = (navigator as NavigatorWithConnection).connection;
+  if (!connection) {
+    return true;
+  }
+
+  if (connection.saveData) {
+    return false;
+  }
+
+  const effectiveType = connection.effectiveType?.toLowerCase() ?? "";
+  if (effectiveType.includes("2g")) {
+    return false;
+  }
+
+  return typeof connection.downlink !== "number" || connection.downlink >= 1.2;
+}
+
 function warmImageCache(reviews: TestimonialReview[], photos: CustomerGalleryPhoto[]) {
   if (typeof window === "undefined") {
     return;
@@ -229,7 +302,11 @@ function warmImageCache(reviews: TestimonialReview[], photos: CustomerGalleryPho
     image.src = review.profilePhotoUrl;
   }
 
-  for (const photo of photos) {
+  if (!shouldWarmPhotoCache()) {
+    return;
+  }
+
+  for (const photo of photos.slice(0, PHOTO_WARM_LIMIT)) {
     if (!photo.imageUrl) {
       continue;
     }
@@ -491,28 +568,29 @@ function buildPayloadFromV1(
     })
     .slice(0, reviewLimit);
 
-  const normalizedPhotos: CustomerGalleryPhoto[] = photos
-    .map((photo) => {
-      if (typeof photo.name !== "string" || !photo.name.trim()) {
-        return null;
-      }
+  const normalizedPhotos: CustomerGalleryPhoto[] = dedupePhotosByUrl(
+    photos
+      .map((photo) => {
+        if (typeof photo.name !== "string" || !photo.name.trim()) {
+          return null;
+        }
 
-      const attribution = Array.isArray(photo.authorAttributions)
-        ? photo.authorAttributions[0]
-        : undefined;
+        const attribution = Array.isArray(photo.authorAttributions)
+          ? photo.authorAttributions[0]
+          : undefined;
 
-      return {
-        imageUrl: buildPhotoMediaUrl(photo.name, apiKey),
-        authorName:
-          typeof attribution?.displayName === "string"
-            ? attribution.displayName
-            : null,
-        authorUrl:
-          typeof attribution?.uri === "string" ? attribution.uri : null,
-      } satisfies CustomerGalleryPhoto;
-    })
-    .filter((photo): photo is CustomerGalleryPhoto => photo !== null)
-    .slice(0, DEFAULT_PHOTO_LIMIT);
+        return {
+          imageUrl: buildPhotoMediaUrl(photo.name, apiKey),
+          authorName:
+            typeof attribution?.displayName === "string"
+              ? attribution.displayName
+              : null,
+          authorUrl:
+            typeof attribution?.uri === "string" ? attribution.uri : null,
+        } satisfies CustomerGalleryPhoto;
+      })
+      .filter((photo): photo is CustomerGalleryPhoto => photo !== null),
+  ).slice(0, DEFAULT_PHOTO_LIMIT);
 
   return {
     placeName:
@@ -570,7 +648,7 @@ async function resolvePlaceDetails(
     placeService.getDetails(
       {
         placeId: resolvedPlaceId,
-        fields: ["name", "rating", "reviews", "url", "user_ratings_total"],
+        fields: ["name", "rating", "reviews", "photos", "url", "user_ratings_total"],
       },
       (result, status) => {
         if (status !== okStatus || !result) {
@@ -622,8 +700,8 @@ function buildPayload(details: GooglePlaceDetails, reviewLimit: number) {
     })
     .slice(0, reviewLimit);
 
-  const normalizedPhotos: CustomerGalleryPhoto[] = photos
-    .flatMap((photo) => {
+  const normalizedPhotos: CustomerGalleryPhoto[] = dedupePhotosByUrl(
+    photos.flatMap((photo) => {
       try {
         const imageUrl = photo.getUrl({
           maxWidth: PHOTO_MAX_WIDTH,
@@ -640,8 +718,8 @@ function buildPayload(details: GooglePlaceDetails, reviewLimit: number) {
       } catch {
         return [];
       }
-    })
-    .slice(0, DEFAULT_PHOTO_LIMIT);
+    }),
+  ).slice(0, DEFAULT_PHOTO_LIMIT);
 
   return {
     placeName:
@@ -678,6 +756,10 @@ export default function GoogleTestimonials({
     "loading" | "refreshing" | "ready" | "error"
   >("loading");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const placeStars = summarizeRating(payload?.rating ?? 0);
+  const galleryPhotos = useMemo(() => {
+    return dedupePhotosByUrl([...(payload?.photos ?? []), ...LOCAL_GALLERY_PHOTOS]);
+  }, [payload?.photos]);
 
   useEffect(() => {
     let isCancelled = false;
@@ -782,7 +864,7 @@ export default function GoogleTestimonials({
   }, [apiKey, cacheKey, placeId, placeQuery, reviewLimit]);
 
   return (
-    <section className="bg-surface-elevated py-16">
+    <section className="bg-surface-elevated py-14 sm:py-16">
       <Container className="space-y-6">
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">
@@ -792,15 +874,15 @@ export default function GoogleTestimonials({
         </div>
 
         {loadState === "error" && !payload ? (
-          <div className="flat-panel p-5 text-sm text-muted">
+          <div className="flat-panel p-5 text-sm leading-relaxed text-muted">
             {errorMessage ?? "Unable to load Google reviews right now."}
           </div>
         ) : null}
 
         <div className="grid gap-4 lg:grid-cols-[320px_1fr]">
-          <aside className="flat-panel flex h-[340px] flex-col gap-4 p-5">
+          <aside className="flat-panel flex flex-col gap-4 p-5 lg:h-[340px]">
             <div className="flex flex-col items-center gap-3">
-              <div className="relative h-28 w-[80%] overflow-hidden rounded-2xl bg-surface">
+              <div className="relative h-28 w-full max-w-[260px] overflow-hidden rounded-2xl bg-surface">
                 <Image
                   src={withBasePath("/images/wcas logo.svg")}
                   alt="West Coast Aquarium Services logo"
@@ -815,9 +897,7 @@ export default function GoogleTestimonials({
                 </p>
                 <div className="mt-1 flex items-center justify-center gap-2">
                   <div className="text-sm tracking-wide text-[#f5c518]">
-                    {`${"★".repeat(
-                      summarizeRating(payload?.rating ?? 0).rounded,
-                    )}${"☆".repeat(summarizeRating(payload?.rating ?? 0).empty)}`}
+                    {`${"★".repeat(placeStars.rounded)}${"☆".repeat(placeStars.empty)}`}
                   </div>
                   <span className="text-xs text-muted">
                     {(payload?.rating ?? 0).toFixed(1)}/5
@@ -835,27 +915,27 @@ export default function GoogleTestimonials({
                 href={payload.placeUrl}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center justify-center rounded-full border border-outline/80 bg-surface px-5 py-2 text-sm font-semibold text-foreground transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-outline/80 bg-surface px-5 py-2 text-sm font-semibold text-foreground transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
               >
                 View on Google
               </a>
             ) : (
-              <div className="rounded-full border border-outline/80 bg-surface px-5 py-2 text-center text-sm font-semibold text-muted">
+              <div className="flex min-h-11 items-center justify-center rounded-full border border-outline/80 bg-surface px-5 py-2 text-center text-sm font-semibold text-muted">
                 Loading Google link...
               </div>
             )}
           </aside>
 
-          <div className="overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="-mx-1 overflow-x-auto px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {payload?.reviews.length ? (
-              <div className="flex h-[340px] items-stretch gap-4">
+              <div className="flex h-[320px] snap-x snap-mandatory items-stretch gap-4 sm:h-[340px]">
                 {payload.reviews.map((review, index) => {
                   const stars = summarizeRating(review.rating);
 
                   return (
                     <article
                       key={`${review.authorName}-${review.time ?? index}`}
-                      className="flat-panel flex h-full w-[300px] shrink-0 flex-col gap-4 p-5"
+                      className="flat-panel flex h-full w-[84vw] max-w-[300px] shrink-0 snap-start flex-col gap-4 p-5 sm:w-[300px]"
                     >
                       <div className="flex items-center gap-3">
                         {review.profilePhotoUrl ? (
@@ -864,6 +944,8 @@ export default function GoogleTestimonials({
                           <img
                             src={review.profilePhotoUrl}
                             alt={`${review.authorName} profile photo`}
+                            width={44}
+                            height={44}
                             className="h-11 w-11 rounded-full object-cover"
                             loading="lazy"
                             referrerPolicy="no-referrer"
@@ -884,7 +966,7 @@ export default function GoogleTestimonials({
                           </p>
                         </div>
                       </div>
-                      <p className="grow overflow-y-auto pr-1 text-sm text-muted">
+                      <p className="grow overflow-y-auto pr-1 text-sm leading-relaxed text-muted">
                         {review.text}
                       </p>
                       <div className="mt-auto flex items-center justify-between text-xs text-muted">
@@ -914,7 +996,7 @@ export default function GoogleTestimonials({
           </div>
         </div>
 
-        <CustomerPhotoGallery photos={payload?.photos ?? []} />
+        <CustomerPhotoGallery photos={galleryPhotos} />
       </Container>
     </section>
   );

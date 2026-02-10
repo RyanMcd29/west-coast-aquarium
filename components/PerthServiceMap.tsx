@@ -33,19 +33,47 @@ const chunkSuburbs = (suburbs: string[], size = 2) => {
 
 export default function PerthServiceMap({ regions }: PerthServiceMapProps) {
   const bounds = useMemo(() => {
-    const points = regions.flatMap((region) => region.coordinates);
-    return latLngBounds(points as [number, number][]);
+    const points = regions
+      .flatMap((region) => region.coordinates)
+      .filter(
+        (
+          coordinate,
+        ): coordinate is [number, number] =>
+          Array.isArray(coordinate) &&
+          coordinate.length >= 2 &&
+          typeof coordinate[0] === "number" &&
+          typeof coordinate[1] === "number",
+      );
+
+    if (!points.length) {
+      return null;
+    }
+
+    return latLngBounds(points);
   }, [regions]);
+
+  if (!bounds) {
+    return (
+      <div className="perth-service-map flex items-center justify-center text-sm text-muted">
+        Service area map unavailable.
+      </div>
+    );
+  }
 
   return (
     <MapContainer
       bounds={bounds}
-      boundsOptions={{ padding: [50, 50], maxZoom: 10 }}
+      boundsOptions={{ padding: [42, 42], maxZoom: 10 }}
       className="perth-service-map"
+      preferCanvas
       scrollWheelZoom={false}
       zoomControl={false}
+      attributionControl
+      dragging
+      zoomAnimation
       minZoom={8}
       maxZoom={12}
+      aria-label="Perth metro service area map"
     >
       <TileLayer attribution={tileAttribution} url={tileUrl} />
       {regions.map((region) => {
@@ -54,17 +82,20 @@ export default function PerthServiceMap({ regions }: PerthServiceMapProps) {
           <Polygon
             key={region.id}
             positions={region.coordinates}
+            smoothFactor={1}
             pathOptions={{
               color: region.color,
-              opacity: region.strokeOpacity ?? 0.75,
-              weight: 1.5,
+              opacity: region.strokeOpacity ?? 0.9,
+              weight: 1.8,
+              lineCap: "round",
+              lineJoin: "round",
               fillColor: region.color,
-              fillOpacity: region.fillOpacity ?? 0.32,
+              fillOpacity: region.fillOpacity ?? 0.25,
             }}
           >
             <Tooltip
               className="perth-map-tooltip"
-              direction="top"
+              direction="auto"
               sticky
               opacity={1}
             >

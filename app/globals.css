@@ -8,7 +8,7 @@
   --surface-elevated: #eef6fb;
   --primary: #087bb0;
   --accent: #02aef0;
-  --muted: #56626b;
+  --muted: #41515d;
   --outline: #d6e6ef;
   --hero-glow: #b8e6fb;
 }
@@ -34,7 +34,7 @@
     --foreground: #e6f1f7;
     --surface: #0c1b27;
     --surface-elevated: #102534;
-    --muted: #a5b8c6;
+    --muted: #b2c6d5;
     --outline: #1c3445;
     --hero-glow: #0d4f75;
   }
@@ -44,30 +44,61 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), "Segoe UI", system-ui, sans-serif;
+  line-height: 1.6;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .perth-service-map {
-  height: 420px;
+  height: 320px;
   width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
   font-family: var(--font-sans);
+  isolation: isolate;
+}
+
+@media (min-width: 640px) {
+  .perth-service-map {
+    height: 360px;
+  }
 }
 
 @media (min-width: 768px) {
   .perth-service-map {
-    height: 460px;
+    height: 430px;
   }
 }
 
 .perth-service-map.leaflet-container {
-  background: var(--surface);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface-elevated) 95%, white 5%) 0%,
+    var(--surface) 100%
+  );
+}
+
+.perth-service-map .leaflet-tile-pane {
+  filter: saturate(0.9) contrast(1.03);
+}
+
+.perth-service-map .leaflet-interactive {
+  transition:
+    fill-opacity 160ms ease,
+    opacity 160ms ease;
+}
+
+.perth-service-map .leaflet-interactive:hover {
+  fill-opacity: 0.32;
 }
 
 .perth-service-map .leaflet-control-attribution {
   background: color-mix(in srgb, var(--surface) 85%, transparent);
   color: var(--muted);
-  font-size: 11px;
-  padding: 2px 6px;
+  font-size: 10px;
+  padding: 2px 7px;
+  backdrop-filter: blur(4px);
 }
 
 .perth-service-map .leaflet-control-attribution a {
@@ -75,12 +106,14 @@ body {
 }
 
 .perth-map-tooltip.leaflet-tooltip {
-  background: var(--surface);
-  border: 1px solid var(--outline);
-  border-radius: 12px;
-  box-shadow: 0 10px 24px color-mix(in srgb, #000 12%, transparent);
+  background: color-mix(in srgb, var(--surface) 95%, transparent);
+  border: 1px solid color-mix(in srgb, var(--outline) 85%, white 15%);
+  border-radius: 14px;
+  box-shadow: 0 12px 26px color-mix(in srgb, #000 14%, transparent);
   color: var(--foreground);
-  padding: 8px 10px;
+  max-width: 230px;
+  padding: 10px 12px;
+  backdrop-filter: blur(6px);
 }
 
 .perth-map-tooltip.leaflet-tooltip::before {
@@ -89,14 +122,14 @@ body {
 
 .perth-map-tooltip__title {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .perth-map-tooltip__list {
   color: var(--muted);
   font-size: 11px;
-  line-height: 1.4;
-  margin-top: 4px;
+  line-height: 1.45;
+  margin-top: 5px;
 }
 
 h1,
@@ -105,10 +138,42 @@ h3,
 h4 {
   font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
   letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  outline-offset: 3px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 85%, white 15%);
 }
 
 ::selection {
   background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @layer utilities {

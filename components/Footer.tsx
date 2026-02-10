@@ -17,7 +17,7 @@ export default function Footer() {
         <div className="flex flex-col justify-between gap-8 md:flex-row">
           <div className="max-w-sm">
             <Logo size="sm" />
-            <p className="mt-4 text-sm text-muted">
+            <p className="mt-4 text-sm leading-relaxed text-muted">
               Bespoke aquarium care and technical support for Perth metro homes
               and businesses. We keep your system healthy, stable, and
               presentation-ready.

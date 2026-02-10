@@ -45,7 +45,7 @@ async function loadSharp(inputPath, name, forceSips = false) {
     try {
       await sharp(inputPath).metadata();
       return sharp(inputPath);
-    } catch (error) {
+    } catch {
       // Fall through to sips conversion.
     }
   }
@@ -75,7 +75,7 @@ async function processAsset({ input, output }) {
       .resize({ width: maxWidth, withoutEnlargement: true })
       .webp({ quality })
       .toFile(outputPath);
-  } catch (error) {
+  } catch {
     pipeline = await loadSharp(inputPath, output, true);
     await pipeline
       .rotate()

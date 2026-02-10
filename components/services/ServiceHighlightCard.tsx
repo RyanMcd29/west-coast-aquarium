@@ -27,7 +27,7 @@ export default function ServiceHighlightCard({
       ) : null}
       <div>
         <h3 className="text-lg font-semibold text-foreground">{title}</h3>
-        <p className="mt-2 text-sm text-muted">{description}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{description}</p>
       </div>
       {highlights?.length ? (
         <ul className="mt-1 space-y-2 text-xs text-muted">
