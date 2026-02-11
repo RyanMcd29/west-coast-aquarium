@@ -37,6 +37,14 @@ function easeOutCubic(value: number): number {
   return 1 - Math.pow(1 - value, 3);
 }
 
+function snapToDevicePixels(value: number, devicePixelRatio: number): number {
+  if (devicePixelRatio <= 0) {
+    return Math.round(value);
+  }
+
+  return Math.round(value * devicePixelRatio) / devicePixelRatio;
+}
+
 function hashString(value: string) {
   let hash = 2166136261;
   for (let index = 0; index < value.length; index += 1) {
@@ -77,6 +85,11 @@ export default function CustomerPhotoGallery({
   const railRef = useRef<HTMLDivElement | null>(null);
   const loopWidthRef = useRef(0);
   const scrollOffsetRef = useRef(0);
+  const devicePixelRatioRef = useRef(
+    typeof window !== "undefined" && window.devicePixelRatio > 0
+      ? window.devicePixelRatio
+      : 1,
+  );
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   // Keep "randomized" order stable across server and client for hydration safety.
@@ -138,6 +151,8 @@ export default function CustomerPhotoGallery({
   useEffect(() => {
     const handleResize = () => {
       baseSpeedRef.current = getSpeedForScreenWidth(window.innerWidth);
+      devicePixelRatioRef.current =
+        window.devicePixelRatio > 0 ? window.devicePixelRatio : 1;
     };
 
     // Set initial value
@@ -337,7 +352,10 @@ export default function CustomerPhotoGallery({
           if (scrollOffsetRef.current >= loopWidth) {
             scrollOffsetRef.current %= loopWidth;
           }
-          rail.scrollLeft = scrollOffsetRef.current;
+          rail.scrollLeft = snapToDevicePixels(
+            scrollOffsetRef.current,
+            devicePixelRatioRef.current,
+          );
         }
       }
 
@@ -366,9 +384,9 @@ export default function CustomerPhotoGallery({
       <div className="relative left-1/2 mt-5 h-[380px] w-screen -translate-x-1/2 overflow-hidden sm:left-0 sm:h-[410px] sm:w-full sm:translate-x-0 lg:h-[430px] sm:[mask-image:linear-gradient(to_right,transparent,black_56px,black_calc(100%-56px),transparent)]">
         <div
           ref={railRef}
-          className="h-full overflow-x-auto overflow-y-hidden [scrollbar-width:none] [will-change:scroll-position] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
+          className="h-full overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
         >
-          <div className="flex h-full transform-gpu items-start px-2 py-2">
+          <div className="flex h-full items-start px-2 py-2">
             {carouselPhotos.map((photo, index) => {
               const isHigh = index % 2 === 0;
 
